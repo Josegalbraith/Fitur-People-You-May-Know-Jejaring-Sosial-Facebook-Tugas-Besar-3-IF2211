@@ -1,0 +1,7 @@
+D:\Doc\source\repos\Tubes2Stima\bin\Debug\Tubes2Stima.exe.config
+D:\Doc\source\repos\Tubes2Stima\bin\Debug\Tubes2Stima.exe
+D:\Doc\source\repos\Tubes2Stima\bin\Debug\Tubes2Stima.pdb
+D:\Doc\source\repos\Tubes2Stima\obj\Debug\Tubes2Stima.csprojAssemblyReference.cache
+D:\Doc\source\repos\Tubes2Stima\obj\Debug\Tubes2Stima.csproj.CoreCompileInputs.cache
+D:\Doc\source\repos\Tubes2Stima\obj\Debug\Tubes2Stima.exe
+D:\Doc\source\repos\Tubes2Stima\obj\Debug\Tubes2Stima.pdb
