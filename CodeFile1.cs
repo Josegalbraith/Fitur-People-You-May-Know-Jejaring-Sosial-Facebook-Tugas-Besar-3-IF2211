@@ -12,9 +12,9 @@ namespace DepthFirstSearch
     {
         private string[][] inputData;
         private ArrayList inputNodes;
-        public DataInput()
+        public DataInput(string path)
         {
-            string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"../../test.txt");
+           // string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"../../test.txt");
 
             // Read each line of the file into a string array. Each element
             // of the array is one line of the file.
@@ -75,10 +75,10 @@ namespace DepthFirstSearch
         private string DestinationNode ;
         private int[][] AdjMatrix;
         private ArrayList NodeList;
-        public DFS(string Origin, string Destination)
+        public DFS(string Origin, string Destination,string path)
         {
             // Get Input Data
-            DataInput dataInput = new DataInput();
+            DataInput dataInput = new DataInput(path);
             NodeList = dataInput.GetNodes();
             string[][] inputList = dataInput.GetInputs();
 
@@ -160,9 +160,9 @@ namespace DepthFirstSearch
 
             }
         }
-        static bool CheckNodeExist(string Origin,string Dest)
+        static bool CheckNodeExist(string Origin,string Dest,string path)
         {
-            DataInput dataInput = new DataInput();
+            DataInput dataInput = new DataInput(path);
             ArrayList CheckDataList = dataInput.GetNodes();
             return (CheckDataList.Contains(Origin) && CheckDataList.Contains(Dest));
         }

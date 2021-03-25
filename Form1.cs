@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using Tubes2Stima;
+using DepthFirstSearch;
 
 namespace Tubes2Stima
 {
@@ -28,8 +30,14 @@ namespace Tubes2Stima
             {
                 if ((myStream = openFileDialog1.OpenFile()) != null) {
                     string strfilename = openFileDialog1.FileName;
-                    string filetext = File.ReadAllText(strfilename);
-                    rtb_test.Text = filetext;
+                    //string filetext = File.ReadAllText(strfilename);
+                    DataInput dataInput = new DataInput(strfilename);
+                    string txt = "";
+                    foreach(string line in dataInput.GetNodes())
+                    {
+                        txt += line + " ";
+                    }
+                    rtb_test.Text = txt ;
                     lbl_filename.Text = strfilename;
                 }
             }
