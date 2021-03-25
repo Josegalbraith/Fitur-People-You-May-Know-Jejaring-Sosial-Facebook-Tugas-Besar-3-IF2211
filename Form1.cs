@@ -36,11 +36,29 @@ namespace Tubes2Stima
                     foreach(string line in dataInput.GetNodes())
                     {
                         txt += line + " ";
+                        cmb_choose_acc.Items.Add(line);
+                        cmb_explore.Items.Add(line);
                     }
                     rtb_test.Text = txt ;
                     lbl_filename.Text = strfilename;
+
                 }
             }
+        }
+
+        private void rdr_DFS_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void rdr_BFS_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_submit_Click(object sender, EventArgs e)
+        {
+            lbl_text_friendrec.Text = "Friends Recommendations for " ;
         }
     }
 }
