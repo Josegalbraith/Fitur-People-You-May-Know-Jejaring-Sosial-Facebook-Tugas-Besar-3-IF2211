@@ -37,6 +37,11 @@ namespace Tubes2Stima
             this.btn_browse = new System.Windows.Forms.Button();
             this.rtb_test = new System.Windows.Forms.RichTextBox();
             this.lbl_filename = new System.Windows.Forms.Label();
+            this.lbl_choose_acc = new System.Windows.Forms.Label();
+            this.lbl_explore_with = new System.Windows.Forms.Label();
+            this.btn_submit = new System.Windows.Forms.Button();
+            this.cmb_choose_acc = new System.Windows.Forms.ComboBox();
+            this.cmb_explore = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // lbl_title
@@ -112,7 +117,7 @@ namespace Tubes2Stima
             this.rtb_test.Location = new System.Drawing.Point(48, 133);
             this.rtb_test.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.rtb_test.Name = "rtb_test";
-            this.rtb_test.Size = new System.Drawing.Size(437, 83);
+            this.rtb_test.Size = new System.Drawing.Size(437, 153);
             this.rtb_test.TabIndex = 6;
             this.rtb_test.Text = "";
             // 
@@ -124,11 +129,64 @@ namespace Tubes2Stima
             this.lbl_filename.Size = new System.Drawing.Size(0, 13);
             this.lbl_filename.TabIndex = 7;
             // 
+            // lbl_choose_acc
+            // 
+            this.lbl_choose_acc.AutoSize = true;
+            this.lbl_choose_acc.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_choose_acc.Location = new System.Drawing.Point(45, 301);
+            this.lbl_choose_acc.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbl_choose_acc.Name = "lbl_choose_acc";
+            this.lbl_choose_acc.Size = new System.Drawing.Size(117, 19);
+            this.lbl_choose_acc.TabIndex = 8;
+            this.lbl_choose_acc.Text = "Choose Account :";
+            // 
+            // lbl_explore_with
+            // 
+            this.lbl_explore_with.AutoSize = true;
+            this.lbl_explore_with.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_explore_with.Location = new System.Drawing.Point(45, 337);
+            this.lbl_explore_with.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbl_explore_with.Name = "lbl_explore_with";
+            this.lbl_explore_with.Size = new System.Drawing.Size(148, 19);
+            this.lbl_explore_with.TabIndex = 9;
+            this.lbl_explore_with.Text = "Explore Friends With : ";
+            // 
+            // btn_submit
+            // 
+            this.btn_submit.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_submit.Location = new System.Drawing.Point(39, 383);
+            this.btn_submit.Name = "btn_submit";
+            this.btn_submit.Size = new System.Drawing.Size(63, 32);
+            this.btn_submit.TabIndex = 10;
+            this.btn_submit.Text = "Submit";
+            this.btn_submit.UseVisualStyleBackColor = true;
+            // 
+            // cmb_choose_acc
+            // 
+            this.cmb_choose_acc.FormattingEnabled = true;
+            this.cmb_choose_acc.Location = new System.Drawing.Point(169, 302);
+            this.cmb_choose_acc.Name = "cmb_choose_acc";
+            this.cmb_choose_acc.Size = new System.Drawing.Size(66, 21);
+            this.cmb_choose_acc.TabIndex = 11;
+            // 
+            // cmb_explore
+            // 
+            this.cmb_explore.FormattingEnabled = true;
+            this.cmb_explore.Location = new System.Drawing.Point(198, 335);
+            this.cmb_explore.Name = "cmb_explore";
+            this.cmb_explore.Size = new System.Drawing.Size(66, 21);
+            this.cmb_explore.TabIndex = 12;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(533, 292);
+            this.ClientSize = new System.Drawing.Size(533, 701);
+            this.Controls.Add(this.cmb_explore);
+            this.Controls.Add(this.cmb_choose_acc);
+            this.Controls.Add(this.btn_submit);
+            this.Controls.Add(this.lbl_explore_with);
+            this.Controls.Add(this.lbl_choose_acc);
             this.Controls.Add(this.lbl_filename);
             this.Controls.Add(this.rtb_test);
             this.Controls.Add(this.btn_browse);
@@ -155,5 +213,10 @@ namespace Tubes2Stima
         private System.Windows.Forms.Button btn_browse;
         private System.Windows.Forms.RichTextBox rtb_test;
         private System.Windows.Forms.Label lbl_filename;
+        private System.Windows.Forms.Label lbl_choose_acc;
+        private System.Windows.Forms.Label lbl_explore_with;
+        private System.Windows.Forms.Button btn_submit;
+        private System.Windows.Forms.ComboBox cmb_choose_acc;
+        private System.Windows.Forms.ComboBox cmb_explore;
     }
 }
