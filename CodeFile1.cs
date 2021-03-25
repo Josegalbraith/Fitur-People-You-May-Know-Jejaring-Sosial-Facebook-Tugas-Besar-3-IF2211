@@ -12,9 +12,9 @@ namespace DepthFirstSearch
     {
         private string[][] inputData;
         private ArrayList inputNodes;
-        public DataInput()
+        public DataInput(string path)
         {
-            string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"../../test.txt");
+           // string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"../../test.txt");
 
             // Read each line of the file into a string array. Each element
             // of the array is one line of the file.
@@ -75,10 +75,11 @@ namespace DepthFirstSearch
         private string DestinationNode ;
         private int[][] AdjMatrix;
         private ArrayList NodeList;
-        public DFS(string Origin, string Destination)
+        private string PathResult="";
+        public DFS(string Origin, string Destination,string path)
         {
             // Get Input Data
-            DataInput dataInput = new DataInput();
+            DataInput dataInput = new DataInput(path);
             NodeList = dataInput.GetNodes();
             string[][] inputList = dataInput.GetInputs();
 
@@ -160,9 +161,9 @@ namespace DepthFirstSearch
 
             }
         }
-        static bool CheckNodeExist(string Origin,string Dest)
+        public bool CheckNodeExist(string Origin,string Dest,string path)
         {
-            DataInput dataInput = new DataInput();
+            DataInput dataInput = new DataInput(path);
             ArrayList CheckDataList = dataInput.GetNodes();
             return (CheckDataList.Contains(Origin) && CheckDataList.Contains(Dest));
         }
@@ -188,24 +189,31 @@ namespace DepthFirstSearch
 
                 //}
 
-                Console.WriteLine();
-                Console.WriteLine("Path To Destination : ");
+                //Console.WriteLine();
+               //Console.WriteLine("Path To Destination : ");
                 for (int i = 0; i < BranchCountPerNodes.Count; i++)
                 {
                     if (BranchCountPerNodes[i] > 0)
                     {
-                        Console.Write(VisitedNode[i] + "-");
+                        //Console.Write(VisitedNode[i] + "-");
+                        this.PathResult += VisitedNode[i].ToString() + " -> ";
                     }
 
                 }
-                Console.Write(CurrentNode);
-                Console.WriteLine();
+                this.PathResult += CurrentNode.ToString();
+                //Console.Write(CurrentNode);
+                //Console.WriteLine();
 
             }
             else
             {
-                Console.WriteLine("Error!! Path Not Exist!");
+                this.PathResult += "Error!! Path Not Exist!";
+                //Console.WriteLine("Error!! Path Not Exist!");
             }
+        }
+        public string GetPathResult()
+        {
+            return this.PathResult;
         }
         private static int[][] AdjacencyMatrixMaker(ArrayList NodeList, string[][] inputList)
         {
@@ -252,6 +260,7 @@ namespace DepthFirstSearch
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
+
 
             //Console.Write("Enter a Origin Node  - ");
             //String Origin = Console.ReadLine();

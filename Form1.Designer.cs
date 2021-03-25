@@ -42,6 +42,9 @@ namespace Tubes2Stima
             this.btn_submit = new System.Windows.Forms.Button();
             this.cmb_choose_acc = new System.Windows.Forms.ComboBox();
             this.cmb_explore = new System.Windows.Forms.ComboBox();
+            this.lbl_text_friendrec = new System.Windows.Forms.Label();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // lbl_title
@@ -81,30 +84,32 @@ namespace Tubes2Stima
             // 
             this.rdr_DFS.AutoSize = true;
             this.rdr_DFS.Location = new System.Drawing.Point(120, 97);
-            this.rdr_DFS.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.rdr_DFS.Margin = new System.Windows.Forms.Padding(2);
             this.rdr_DFS.Name = "rdr_DFS";
             this.rdr_DFS.Size = new System.Drawing.Size(46, 17);
             this.rdr_DFS.TabIndex = 3;
             this.rdr_DFS.TabStop = true;
             this.rdr_DFS.Text = "DFS";
             this.rdr_DFS.UseVisualStyleBackColor = true;
+            this.rdr_DFS.CheckedChanged += new System.EventHandler(this.rdr_DFS_CheckedChanged);
             // 
             // rdr_BFS
             // 
             this.rdr_BFS.AutoSize = true;
             this.rdr_BFS.Location = new System.Drawing.Point(169, 97);
-            this.rdr_BFS.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.rdr_BFS.Margin = new System.Windows.Forms.Padding(2);
             this.rdr_BFS.Name = "rdr_BFS";
             this.rdr_BFS.Size = new System.Drawing.Size(45, 17);
             this.rdr_BFS.TabIndex = 4;
             this.rdr_BFS.TabStop = true;
             this.rdr_BFS.Text = "BFS";
             this.rdr_BFS.UseVisualStyleBackColor = true;
+            this.rdr_BFS.CheckedChanged += new System.EventHandler(this.rdr_BFS_CheckedChanged);
             // 
             // btn_browse
             // 
             this.btn_browse.Location = new System.Drawing.Point(120, 62);
-            this.btn_browse.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_browse.Margin = new System.Windows.Forms.Padding(2);
             this.btn_browse.Name = "btn_browse";
             this.btn_browse.Size = new System.Drawing.Size(81, 25);
             this.btn_browse.TabIndex = 5;
@@ -115,11 +120,12 @@ namespace Tubes2Stima
             // rtb_test
             // 
             this.rtb_test.Location = new System.Drawing.Point(48, 133);
-            this.rtb_test.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.rtb_test.Margin = new System.Windows.Forms.Padding(2);
             this.rtb_test.Name = "rtb_test";
             this.rtb_test.Size = new System.Drawing.Size(437, 153);
             this.rtb_test.TabIndex = 6;
             this.rtb_test.Text = "";
+            this.rtb_test.TextChanged += new System.EventHandler(this.rtb_test_TextChanged);
             // 
             // lbl_filename
             // 
@@ -160,6 +166,7 @@ namespace Tubes2Stima
             this.btn_submit.TabIndex = 10;
             this.btn_submit.Text = "Submit";
             this.btn_submit.UseVisualStyleBackColor = true;
+            this.btn_submit.Click += new System.EventHandler(this.btn_submit_Click);
             // 
             // cmb_choose_acc
             // 
@@ -168,6 +175,7 @@ namespace Tubes2Stima
             this.cmb_choose_acc.Name = "cmb_choose_acc";
             this.cmb_choose_acc.Size = new System.Drawing.Size(66, 21);
             this.cmb_choose_acc.TabIndex = 11;
+            this.cmb_choose_acc.SelectedIndexChanged += new System.EventHandler(this.cmb_choose_acc_SelectedIndexChanged);
             // 
             // cmb_explore
             // 
@@ -176,12 +184,42 @@ namespace Tubes2Stima
             this.cmb_explore.Name = "cmb_explore";
             this.cmb_explore.Size = new System.Drawing.Size(66, 21);
             this.cmb_explore.TabIndex = 12;
+            this.cmb_explore.SelectedIndexChanged += new System.EventHandler(this.cmb_explore_SelectedIndexChanged);
+            // 
+            // lbl_text_friendrec
+            // 
+            this.lbl_text_friendrec.AutoSize = true;
+            this.lbl_text_friendrec.Location = new System.Drawing.Point(45, 437);
+            this.lbl_text_friendrec.Name = "lbl_text_friendrec";
+            this.lbl_text_friendrec.Size = new System.Drawing.Size(0, 13);
+            this.lbl_text_friendrec.TabIndex = 13;
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Location = new System.Drawing.Point(36, 453);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(449, 49);
+            this.richTextBox1.TabIndex = 14;
+            this.richTextBox1.Text = "";
+            this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
+            // 
+            // richTextBox2
+            // 
+            this.richTextBox2.Location = new System.Drawing.Point(322, 301);
+            this.richTextBox2.Name = "richTextBox2";
+            this.richTextBox2.Size = new System.Drawing.Size(163, 74);
+            this.richTextBox2.TabIndex = 15;
+            this.richTextBox2.Text = "";
+            this.richTextBox2.TextChanged += new System.EventHandler(this.richTextBox2_TextChanged);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(533, 701);
+            this.Controls.Add(this.richTextBox2);
+            this.Controls.Add(this.richTextBox1);
+            this.Controls.Add(this.lbl_text_friendrec);
             this.Controls.Add(this.cmb_explore);
             this.Controls.Add(this.cmb_choose_acc);
             this.Controls.Add(this.btn_submit);
@@ -195,7 +233,7 @@ namespace Tubes2Stima
             this.Controls.Add(this.lbl_algorithm_opsi);
             this.Controls.Add(this.lbl_graph_file);
             this.Controls.Add(this.lbl_title);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
@@ -218,5 +256,8 @@ namespace Tubes2Stima
         private System.Windows.Forms.Button btn_submit;
         private System.Windows.Forms.ComboBox cmb_choose_acc;
         private System.Windows.Forms.ComboBox cmb_explore;
+        private System.Windows.Forms.Label lbl_text_friendrec;
+        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox richTextBox2;
     }
 }
