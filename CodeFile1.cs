@@ -1,6 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using Tubes2Stima;
+
 namespace DepthFirstSearch
 {
     class DataInput
@@ -244,23 +249,27 @@ namespace DepthFirstSearch
         
         static void Main()
         {
-            Console.Write("Enter a Origin Node  - ");
-            String Origin = Console.ReadLine();
-            Console.WriteLine();
-            Console.Write("Enter a Dest Node  - ");
-            String Dest = Console.ReadLine();
-            Console.WriteLine();
-            if (CheckNodeExist(Origin, Dest))
-            {
-                DFS SearchPath = new DFS(Origin, Dest);
-                SearchPath.Search();
-                SearchPath.ShowResult();
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new Form1());
 
-            }
-            else
-            {
-                Console.WriteLine("Input Node Not Exist!");
-            }
+            //Console.Write("Enter a Origin Node  - ");
+            //String Origin = Console.ReadLine();
+            //Console.WriteLine();
+            //Console.Write("Enter a Dest Node  - ");
+            //String Dest = Console.ReadLine();
+            //Console.WriteLine();
+            //if (CheckNodeExist(Origin, Dest))
+            //{
+            //    DFS SearchPath = new DFS(Origin, Dest);
+            //    SearchPath.Search();
+            //    SearchPath.ShowResult();
+
+            //}
+            //else
+            //{
+            //    Console.WriteLine("Input Node Not Exist!");
+            //}
 
         }
     }

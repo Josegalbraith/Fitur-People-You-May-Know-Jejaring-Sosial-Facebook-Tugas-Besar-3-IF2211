@@ -12,3 +12,12 @@ C:\Users\joseg\OneDrive\Documents\GitHub\Tubes2_13519022\obj\Debug\Tubes2Stima.c
 C:\Users\joseg\OneDrive\Documents\GitHub\Tubes2_13519022\obj\Debug\Tubes2Stima.csproj.CoreCompileInputs.cache
 C:\Users\joseg\OneDrive\Documents\GitHub\Tubes2_13519022\obj\Debug\Tubes2Stima.exe
 C:\Users\joseg\OneDrive\Documents\GitHub\Tubes2_13519022\obj\Debug\Tubes2Stima.pdb
+D:\MOSES\Project\Stima\Tubes2_13519022\bin\Debug\Tubes2Stima.exe.config
+D:\MOSES\Project\Stima\Tubes2_13519022\bin\Debug\Tubes2Stima.exe
+D:\MOSES\Project\Stima\Tubes2_13519022\bin\Debug\Tubes2Stima.pdb
+D:\MOSES\Project\Stima\Tubes2_13519022\obj\Debug\Tubes2Stima.csprojAssemblyReference.cache
+D:\MOSES\Project\Stima\Tubes2_13519022\obj\Debug\Tubes2Stima.Form1.resources
+D:\MOSES\Project\Stima\Tubes2_13519022\obj\Debug\Tubes2Stima.csproj.GenerateResource.cache
+D:\MOSES\Project\Stima\Tubes2_13519022\obj\Debug\Tubes2Stima.csproj.CoreCompileInputs.cache
+D:\MOSES\Project\Stima\Tubes2_13519022\obj\Debug\Tubes2Stima.exe
+D:\MOSES\Project\Stima\Tubes2_13519022\obj\Debug\Tubes2Stima.pdb

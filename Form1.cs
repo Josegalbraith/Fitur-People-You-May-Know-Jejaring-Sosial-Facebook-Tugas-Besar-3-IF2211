@@ -19,8 +19,8 @@ namespace Tubes2Stima
 
         private void btn_browse_Click(object sender, EventArgs e)
         {
-            
-            var str = FileDialog.ReadAllText()
+
+            //var str = FileDialog.ReadAllText();
         }
     }
 }
