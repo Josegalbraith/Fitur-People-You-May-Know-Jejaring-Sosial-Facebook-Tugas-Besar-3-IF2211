@@ -432,7 +432,7 @@ namespace BFS
                 // Set the flags
                 this.close_flag = true;
                 this.close_startNode = startNode;
-                this.close_maxDegree = -1;
+                this.close_maxDegree = -2;
                 if (this.close_flag)
                 {
                     this.close_closure.Clear();
@@ -494,10 +494,10 @@ namespace BFS
                     }
                 }
 
-                // Calculate the longest possible path, -1 there's no path
+                // Calculate the longest possible path, -2 if there's no path
                 if (this.close_pathToClosedNodes.Count > 0)
                 {
-                    this.close_maxDegree = this.close_pathToClosedNodes[this.close_pathToClosedNodes.Count - 1].Count;
+                    this.close_maxDegree = this.close_pathToClosedNodes[this.close_pathToClosedNodes.Count - 1].Count - 2;
                 }
             }
         }
@@ -513,7 +513,7 @@ namespace BFS
                 this.search_flag = true;
                 this.search_startNode = startNode;
                 this.search_endNode = endNode;
-                this.search_degree = -1;
+                this.search_degree = -2;
                 if (this.search_flag)
                 {
                     this.search_path.Clear();
@@ -652,7 +652,7 @@ namespace BFS
                 {
                     if (skipFirstChar)
                     {
-                        s += "-";
+                        s += " → ";
                     }
                     s += c;
                     skipFirstChar = true;
@@ -672,7 +672,7 @@ namespace BFS
                 int arrayLength = 0;
                 foreach (List<string> path in this.close_pathToClosedNodes)
                 {
-                    if (path.Count == degree)
+                    if ((path.Count - 2) == degree)
                     {
                         arrayLength += 1;
                     }
@@ -681,7 +681,7 @@ namespace BFS
                 int i = 0;
                 foreach (List<string> path in this.close_pathToClosedNodes)
                 {
-                    if (path.Count == degree)
+                    if ((path.Count - 2) == degree)
                     {
                         nodes[i] = path[path.Count - 1];
                         i++;
@@ -693,6 +693,111 @@ namespace BFS
             {
                 throw new NullReferenceException("You must close the graph first (call BFSGraph.Close(startNode))");
             }
+        }
+
+        public string Ordinal(int x)
+        {
+            int i = x % 10;
+            int ii = (x / 10) % 10;
+            string th;
+            if (ii == 1)
+            {
+                th = "th";
+            }
+            else
+            {
+                if (i == 1)
+                {
+                    th = "st";
+                }
+                else if (i == 2)
+                {
+                    th = "nd";
+                }
+                else if (i == 3)
+                {
+                    th = "rd";
+                }
+                else
+                {
+                    th = "th";
+                }
+            }
+            return x.ToString() + th;
+        }
+
+        // Fungsi Friend Recommendation.
+        // Misalnya A di-recommend berteman dengan F dengan mutual friend B, C, D, dan H dengan mutual friend C, G
+        // FriendRecommendation(A)
+        // Output:
+        // { "F" : ["(A → B → F, 1st Degree)", "B", "C", "D"],
+        //   "H" : ["(A → C → H, 1st Degree)", "C", "G"]     }
+        public Dictionary<string, List<string>> FriendRecommendation(string startNode)
+        {
+            Dictionary<string, List<string>> FR = new Dictionary<string, List<string>>();
+
+            // Close the graph
+            this.Close(startNode);
+
+            // Get all 1st degree relation nodes
+            string[] recommendedFriends = this.GetAllNthDegreeRelationNodes(1);
+
+            // Get all 0th degree relation nodes
+            string[] mutualFriends = this.GetAllNthDegreeRelationNodes(0);
+
+            // Construct FR
+            List<string> value;
+            foreach (string recommendedFriend in recommendedFriends)
+            {
+                this.Search(startNode, recommendedFriend);
+                value = new List<string>();
+                value.Add("(" + this.GetSearchPathString() + ", 1st Degree)");
+                foreach (string mutualFriend in mutualFriends)
+                {
+                    if ((this.adjacencyMatrix[this.nodeToIndex[startNode], this.nodeToIndex[mutualFriend]]) && (this.adjacencyMatrix[this.nodeToIndex[recommendedFriend], this.nodeToIndex[mutualFriend]]))
+                    {
+                        value.Add(mutualFriend);
+                    }
+                }
+                string mutualFriendsMessage;
+                if (value.Count == 2)
+                {
+                    mutualFriendsMessage = "1 Mutual Friend:";
+                } else
+                {
+                    mutualFriendsMessage = (value.Count - 1).ToString() + " Mutual Friends:";
+                }
+
+                FR.Add(recommendedFriend, value);
+
+            }
+
+            return FR;
+        }
+
+        // Fungsi Explore Friends.
+        // Misalnya ingin diketahui hubungan antara A dengan H, dan mereka terhubung lewat A → B → F → H
+        // ExploreFriends("A", "H")
+        // Output:
+        // ["2nd-degree connection", "A → B → F → H"]
+        // Catatan: Jika tidak ada hubungan, outputnya otomatis:
+        // ["Tidak ada jalur koneksi yang tersedia", "Anda harus memulai koneksi baru itu sendiri."]
+        public List<string> ExploreFriends(string startNode, string endNode)
+        {
+            this.Search(startNode, endNode);
+            List<string> EF = new List<string>();
+            if (this.search_degree < 0)
+            {
+                EF.Add("Tidak ada jalur koneksi yang tersedia");
+                EF.Add("Anda harus memulai koneksi baru itu sendiri.");
+            }
+            else
+            {
+                EF.Add(Ordinal(this.search_degree) + "-degree connection");
+                EF.Add(this.GetSearchPathString());
+            }
+
+            return EF;
         }
     }
 }
