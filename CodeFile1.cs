@@ -274,3 +274,425 @@ namespace DepthFirstSearch
         }
     }
 }
+namespace BFS
+{
+    [Serializable]
+    public class FileNotFoundException : System.Exception
+    {
+        public FileNotFoundException() : base() { }
+        public FileNotFoundException(string message) : base(message) { }
+        public FileNotFoundException(string message, Exception inner) : base(message, inner) { }
+        protected FileNotFoundException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+    }
+
+    [Serializable]
+    public class EmptyFileException : System.Exception
+    {
+        public EmptyFileException() : base() { }
+        public EmptyFileException(string message) : base(message) { }
+        public EmptyFileException(string message, Exception inner) : base(message, inner) { }
+        protected EmptyFileException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+    }
+
+    class BFSGraph
+    {
+        private string sourcePath;
+        private int nodeCount;
+        private Dictionary<string, int> nodeToIndex;
+        private Dictionary<int, string> indexToNode;
+        private bool[,] adjacencyMatrix;
+
+        private bool close_flag;
+        private string close_startNode;
+        private int close_maxDegree;
+        private List<string> close_closure;
+        private List<List<string>> close_pathToClosedNodes;
+
+        private bool search_flag;
+        private string search_startNode;
+        private string search_endNode;
+        private int search_degree;
+        private List<string> search_path;
+        private List<List<string>> search_pathToSearchedNodes;
+
+        public BFSGraph(string path)
+        {
+            // Set private flags
+            this.close_flag = false;
+            this.search_flag = false;
+            
+            // Check if the file exists
+            if (System.IO.File.Exists(path))
+            {
+                // Reads the file into f_list
+                List<string> f_list = new List<string>();
+                using (System.IO.StreamReader f = new System.IO.StreamReader(path))
+                {
+                    string line;
+                    while ((line = f.ReadLine()) != null)
+                    {
+                        f_list.Add(line);
+                    }
+                }
+
+                // Check if the file is empty
+                if (f_list.Count > 0)
+                {
+                    // Get # of nodes
+                    try
+                    {
+                        this.nodeCount = Int32.Parse(f_list[0]);
+                    }
+                    catch (FormatException e)
+                    {
+                        throw e;
+                    }
+
+                    // Converts f_list into a list of [string, string]
+                    List<string[]> vertice_list = new List<string[]>();
+                    for (int i = 1; i < f_list.Count; i++)
+                    {
+                        vertice_list.Add(f_list[i].Split(' '));
+                    }
+
+                    // Map each node into a number and vice versa
+                    this.nodeToIndex = new Dictionary<string, int>();
+                    int index = 0;
+                    foreach (string[] vertice in vertice_list)
+                    {
+                        foreach (string node in vertice)
+                        {
+                            if (!this.nodeToIndex.ContainsKey(node))
+                            {
+                                this.nodeToIndex.Add(node, index);
+                                index++;
+                            }
+                        }
+                    }
+                    foreach (KeyValuePair<string, int> kv in this.nodeToIndex)
+                    {
+                        this.indexToNode.Add(kv.Value, kv.Key);
+                    }
+
+                    // Check if nodeCount == nodeToIndex.Count
+                    if (this.nodeCount >= this.nodeToIndex.Count)
+                    {
+                        // Creates adjacencyMatrix
+                        this.adjacencyMatrix = new bool[this.nodeCount, this.nodeCount];
+                        for (int i = 0; i < this.nodeCount; i++)
+                        {
+                            for (int j = 0; i < this.nodeCount; i++)
+                            {
+                                this.adjacencyMatrix[i, j] = false;
+                            }
+                        }
+                        
+                        // A vertice should have two edges
+                        try
+                        {
+                            foreach (string[] vertice in vertice_list)
+                            {
+                                this.adjacencyMatrix[nodeToIndex[vertice[0]], nodeToIndex[vertice[1]]] = true;
+                                this.adjacencyMatrix[nodeToIndex[vertice[1]], nodeToIndex[vertice[0]]] = true;
+                            }
+                        }
+                        catch (IndexOutOfRangeException e)
+                        {
+                            throw new IndexOutOfRangeException("At least one vertice has less than two edges", e);
+                        }
+
+                        // Construction complete, path is valid
+                        this.sourcePath = path;
+
+                    }
+                    else // Throws an error, should never happen
+                    {
+                        throw new IndexOutOfRangeException("Number of nodes specified in the file is not enough to contain all vertices");
+                    }
+
+                }
+                else // Throws an error, should never happen
+                {
+                    throw new EmptyFileException("Empty file");
+                }
+
+            }
+            else // Throws an error, should never happen
+            {
+                throw new FileNotFoundException("File does not exist");
+            }
+
+        }
+
+        public void Close(string startNode)
+        {
+            // Does not need to re-close if this.close_flag = true and this.close_startNode = startNode
+            if (!(this.close_flag && (this.close_startNode == startNode)))
+            {
+                // Set the flags
+                this.close_flag = true;
+                this.close_startNode = startNode;
+                this.close_maxDegree = -1;
+                if (this.close_flag)
+                {
+                    this.close_closure.Clear();
+                    for (int nodeIndex = 0; nodeIndex < this.close_pathToClosedNodes.Count; nodeIndex++)
+                    {
+                        this.close_pathToClosedNodes[nodeIndex].Clear();
+                    }
+                    this.close_pathToClosedNodes.Clear();
+                }
+                else
+                {
+                    this.close_closure = new List<string>();
+                    this.close_pathToClosedNodes = new List<List<string>>();
+                }
+                
+                // Get the index of nodes from nodeToIndex
+                int startIndex = this.nodeToIndex[startNode];
+
+                // Initialize boolean array
+                bool[] hasBeenQueued = new bool[this.nodeCount];
+                for (int nodeIndex = 0; nodeIndex < this.nodeCount; nodeIndex++)
+                {
+                    hasBeenQueued[nodeIndex] = false;
+                }
+
+                // Initialize queue
+                Queue<int> queue = new Queue<int>();
+                if (this.ValidateNode(startNode))
+                {
+                    queue.Enqueue(startIndex);
+                    hasBeenQueued[startIndex] = true;
+                    this.close_closure.Add(this.indexToNode[startIndex]);
+                    this.close_pathToClosedNodes.Add(new List<string>());
+                    this.close_pathToClosedNodes[this.close_pathToClosedNodes.Count - 1].Add(this.indexToNode[startIndex]);
+                }
+
+                // Initialize BFS
+                int i;
+                while (queue.Count > 0)
+                {
+                    i = queue.Dequeue();
+                    for (int j = 0; j < this.nodeCount; j++)
+                    {
+                        if (this.adjacencyMatrix[i, j] && !hasBeenQueued[j])
+                        {
+                            queue.Enqueue(j);
+                            hasBeenQueued[j] = true;
+                            this.close_closure.Add(this.indexToNode[j]);
+                            for (int k = 0; k < this.close_pathToClosedNodes.Count; k++)
+                            {
+                                if (this.close_pathToClosedNodes[k][this.close_pathToClosedNodes[k].Count - 1] == this.indexToNode[i])
+                                {
+                                    this.close_pathToClosedNodes.Add(this.close_pathToClosedNodes[k]);
+                                    this.close_pathToClosedNodes[this.close_pathToClosedNodes.Count - 1].Add(this.indexToNode[j]);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // Calculate the longest possible path, -1 there's no path
+                if (this.close_pathToClosedNodes.Count > 0)
+                {
+                    this.close_maxDegree = this.close_pathToClosedNodes[this.close_pathToClosedNodes.Count - 1].Count;
+                }
+            }
+        }
+
+        public void Search(string startNode, string endNode)
+        {
+            // Does not need to re-search if this.search_flag = true, this.closure_startNode = startNode, and this.closure_endNode = endNode
+            if (!(this.search_flag && (this.search_startNode == startNode) && (this.search_endNode == endNode)))
+            {
+                // Only needs to iterate through
+                
+                // Set the flags!
+                this.search_flag = true;
+                this.search_startNode = startNode;
+                this.search_endNode = endNode;
+                this.search_degree = -1;
+                if (this.search_flag)
+                {
+                    this.search_path.Clear();
+                    for (int nodeIndex = 0; nodeIndex < this.search_pathToSearchedNodes.Count; nodeIndex++)
+                    {
+                        this.search_pathToSearchedNodes[nodeIndex].Clear();
+                    }
+                    this.search_pathToSearchedNodes.Clear();
+                }
+                else
+                {
+                    this.search_path = new List<string>();
+                    this.search_pathToSearchedNodes = new List<List<string>>();
+                }
+
+                // Only needs to iterate through close_pathToClosedNodes if a closure of startNode has been made
+                if (this.close_flag && (this.close_startNode == startNode))
+                {
+                    foreach (List<string> path in this.close_pathToClosedNodes)
+                    {
+                        this.search_pathToSearchedNodes.Add(path);
+                        if (path[path.Count - 1] == endNode)
+                        {
+                            foreach (string node in path)
+                            {
+                                this.search_path.Add(node);
+                                this.search_degree += 1;
+                            }
+                            break;
+                        }
+                    }
+
+                }
+                else
+                {
+                    // Get the index of nodes from nodeToIndex
+                    int startIndex = this.nodeToIndex[startNode];
+                    int endIndex = this.nodeToIndex[endNode];
+
+                    // Initialize boolean array
+                    bool[] hasBeenQueued = new bool[this.nodeCount];
+                    for (int nodeIndex = 0; nodeIndex < this.nodeCount; nodeIndex++)
+                    {
+                        hasBeenQueued[nodeIndex] = false;
+                    }
+
+                    // Initialize queue
+                    Queue<int> queue = new Queue<int>();
+                    if (this.ValidateNode(startNode))
+                    {
+                        queue.Enqueue(startIndex);
+                        hasBeenQueued[startIndex] = true;
+                        this.search_pathToSearchedNodes.Add(new List<string>());
+                        this.search_pathToSearchedNodes[this.search_pathToSearchedNodes.Count - 1].Add(this.indexToNode[startIndex]);
+                    }
+
+                    // You can never be too careful
+                    bool isFound;
+                    if (startIndex == endIndex)
+                    {
+                        isFound = true;
+                    }
+                    else
+                    {
+                        isFound = false;
+                    }
+
+                    // Initialize BFS
+                    int i;
+                    while ((!isFound) && (queue.Count > 0))
+                    {
+                        i = queue.Dequeue();
+                        for (int j = 0; j < this.nodeCount; j++)
+                        {
+                            if (this.adjacencyMatrix[i, j] && !hasBeenQueued[j])
+                            {
+                                queue.Enqueue(j);
+                                hasBeenQueued[j] = true;
+                                for (int k = 0; k < this.search_pathToSearchedNodes.Count; k++)
+                                {
+                                    if (this.search_pathToSearchedNodes[k][this.search_pathToSearchedNodes[k].Count - 1] == this.indexToNode[i])
+                                    {
+                                        this.search_pathToSearchedNodes.Add(this.search_pathToSearchedNodes[k]);
+                                        this.search_pathToSearchedNodes[this.search_pathToSearchedNodes.Count - 1].Add(this.indexToNode[j]);
+                                        break;
+                                    }
+                                }
+                                if (j == endIndex)
+                                {
+                                    isFound = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    // If there's a match, set the results
+                    if (isFound)
+                    {
+                        foreach (string node in this.search_pathToSearchedNodes[this.search_pathToSearchedNodes.Count - 1])
+                        {
+                            this.search_path.Add(node);
+                            this.search_degree += 1;
+                        }
+                    }
+                }
+
+            }
+            
+        }
+
+        public bool ValidateNode(string node)
+        {
+            return this.nodeToIndex.ContainsKey(node);
+        }
+
+        public List<string> GetSearchPath()
+        {
+            if (this.search_flag)
+            {
+                return this.search_path;
+            }
+            else
+            {
+                throw new NullReferenceException("You must initialize a search on the graph first (call BFSGraph.Search(startNode, endNode))");
+            }
+        }
+
+        public string GetSearchPathString()
+        {
+            if (this.search_flag)
+            {
+                string s = "";
+                bool skipFirstChar = false;
+                foreach (string c in this.GetSearchPath())
+                {
+                    if (skipFirstChar)
+                    {
+                        s += "-";
+                    }
+                    s += c;
+                    skipFirstChar = true;
+                }
+                return s;
+            }
+            else
+            {
+                throw new NullReferenceException("You must initialize a search on the graph first (call BFSGraph.Search(startNode, endNode))");
+            }
+        }
+
+        public string[] GetAllNthDegreeRelationNodes(int degree)
+        {
+            if (this.close_flag)
+            {
+                int arrayLength = 0;
+                foreach (List<string> path in this.close_pathToClosedNodes)
+                {
+                    if (path.Count == degree)
+                    {
+                        arrayLength += 1;
+                    }
+                }
+                string[] nodes = new string[arrayLength];
+                int i = 0;
+                foreach (List<string> path in this.close_pathToClosedNodes)
+                {
+                    if (path.Count == degree)
+                    {
+                        nodes[i] = path[path.Count - 1];
+                        i++;
+                    }
+                }
+                return nodes;
+            }
+            else
+            {
+                throw new NullReferenceException("You must close the graph first (call BFSGraph.Close(startNode))");
+            }
+        }
+    }
+}
