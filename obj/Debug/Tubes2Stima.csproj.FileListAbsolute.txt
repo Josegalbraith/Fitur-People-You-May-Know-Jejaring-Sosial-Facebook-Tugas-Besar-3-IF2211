@@ -5,3 +5,10 @@ D:\Doc\source\repos\Tubes2Stima\obj\Debug\Tubes2Stima.csprojAssemblyReference.ca
 D:\Doc\source\repos\Tubes2Stima\obj\Debug\Tubes2Stima.csproj.CoreCompileInputs.cache
 D:\Doc\source\repos\Tubes2Stima\obj\Debug\Tubes2Stima.exe
 D:\Doc\source\repos\Tubes2Stima\obj\Debug\Tubes2Stima.pdb
+C:\Users\joseg\OneDrive\Documents\GitHub\Tubes2_13519022\bin\Debug\Tubes2Stima.exe.config
+C:\Users\joseg\OneDrive\Documents\GitHub\Tubes2_13519022\bin\Debug\Tubes2Stima.exe
+C:\Users\joseg\OneDrive\Documents\GitHub\Tubes2_13519022\bin\Debug\Tubes2Stima.pdb
+C:\Users\joseg\OneDrive\Documents\GitHub\Tubes2_13519022\obj\Debug\Tubes2Stima.csprojAssemblyReference.cache
+C:\Users\joseg\OneDrive\Documents\GitHub\Tubes2_13519022\obj\Debug\Tubes2Stima.csproj.CoreCompileInputs.cache
+C:\Users\joseg\OneDrive\Documents\GitHub\Tubes2_13519022\obj\Debug\Tubes2Stima.exe
+C:\Users\joseg\OneDrive\Documents\GitHub\Tubes2_13519022\obj\Debug\Tubes2Stima.pdb
