@@ -58,12 +58,42 @@ namespace Tubes2Stima
 
         private void btn_submit_Click(object sender, EventArgs e)
         {
-            lbl_text_friendrec.Text = "Friends Recommendations for " ;
-            richTextBox1.Text = cmb_choose_acc.Text +"\n"+cmb_explore.Text;
-            DFS dfs = new DFS(cmb_choose_acc.Text, cmb_explore.Text, this.inputPath);
-            dfs.Search();
-            dfs.ShowResult();
-            richTextBox2.Text = dfs.GetPathResult()+" Hey";
+            lbl_text_friendrec.Text = "Friends Recommendations for " + cmb_choose_acc.Text; 
+            //BFS.BFSGraph bfsGraph = new BFS.BFSGraph(this.inputPath);
+            //Dictionary<string, List<string>> FR = bfsGraph.FriendRecommendation(cmb_choose_acc.Text);
+            //string FriendRecommendTxt = "";
+            //foreach (KeyValuePair<string, List<string>> kv in FR)
+            //{
+            //   // Console.WriteLine(kv.Key + " " + kv.Value[0]);
+            //    FriendRecommendTxt += kv.Key + " " + kv.Value[0] +"\n";
+            //    FriendRecommendTxt += kv.Value[1] + " " + kv.Value[2] ;
+
+            //    //Console.Write(kv.Value[1] + " " + kv.Value[2]);
+            //    for (int i = 3; i < kv.Value.Count; i++)
+            //    {
+            //        FriendRecommendTxt += ", " + kv.Value[i];
+            //       // Console.Write(", " + kv.Value[i]);
+            //    }
+            //    FriendRecommendTxt += "\n";
+            //    //Console.WriteLine();
+            //}
+            //richTextBox1.Text = FriendRecommendTxt
+
+            if (rdr_DFS.Checked == true)
+            {
+                DFS dfs = new DFS(cmb_choose_acc.Text, cmb_explore.Text, this.inputPath);
+                dfs.Search();
+                dfs.ShowResult();
+                richTextBox2.Text = dfs.GetPathResult();
+
+            }
+            else
+            {
+                BFS.BFSGraph bfsGraph2 = new BFS.BFSGraph(this.inputPath);
+                List<string> EF = bfsGraph2.ExploreFriends(cmb_choose_acc.Text, cmb_explore.Text);
+                richTextBox2.Text = EF[0] + "\n" + EF[1];
+            }
+            
             
 
 

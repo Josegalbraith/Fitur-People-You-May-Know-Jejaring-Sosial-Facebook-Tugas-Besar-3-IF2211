@@ -410,8 +410,10 @@ namespace BFS
                             }
                         }
                     }
+                    this.indexToNode = new Dictionary<int, string>();
                     foreach (KeyValuePair<string, int> kv in this.nodeToIndex)
                     {
+
                         this.indexToNode.Add(kv.Value, kv.Key);
                     }
 
@@ -471,7 +473,6 @@ namespace BFS
             if (!(this.close_flag && (this.close_startNode == startNode)))
             {
                 // Set the flags
-                this.close_flag = true;
                 this.close_startNode = startNode;
                 this.close_maxDegree = -2;
                 if (this.close_flag)
@@ -488,7 +489,8 @@ namespace BFS
                     this.close_closure = new List<string>();
                     this.close_pathToClosedNodes = new List<List<string>>();
                 }
-                
+                this.close_flag = true;
+
                 // Get the index of nodes from nodeToIndex
                 int startIndex = this.nodeToIndex[startNode];
 
@@ -549,9 +551,8 @@ namespace BFS
             if (!(this.search_flag && (this.search_startNode == startNode) && (this.search_endNode == endNode)))
             {
                 // Only needs to iterate through
-                
+
                 // Set the flags!
-                this.search_flag = true;
                 this.search_startNode = startNode;
                 this.search_endNode = endNode;
                 this.search_degree = -2;
@@ -569,6 +570,7 @@ namespace BFS
                     this.search_path = new List<string>();
                     this.search_pathToSearchedNodes = new List<List<string>>();
                 }
+                this.search_flag = true;
 
                 // Only needs to iterate through close_pathToClosedNodes if a closure of startNode has been made
                 if (this.close_flag && (this.close_startNode == startNode))

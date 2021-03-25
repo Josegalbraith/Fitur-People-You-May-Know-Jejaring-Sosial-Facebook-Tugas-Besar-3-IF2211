@@ -88,7 +88,6 @@ namespace Tubes2Stima
             this.rdr_DFS.Name = "rdr_DFS";
             this.rdr_DFS.Size = new System.Drawing.Size(46, 17);
             this.rdr_DFS.TabIndex = 3;
-            this.rdr_DFS.TabStop = true;
             this.rdr_DFS.Text = "DFS";
             this.rdr_DFS.UseVisualStyleBackColor = true;
             this.rdr_DFS.CheckedChanged += new System.EventHandler(this.rdr_DFS_CheckedChanged);
@@ -101,7 +100,6 @@ namespace Tubes2Stima
             this.rdr_BFS.Name = "rdr_BFS";
             this.rdr_BFS.Size = new System.Drawing.Size(45, 17);
             this.rdr_BFS.TabIndex = 4;
-            this.rdr_BFS.TabStop = true;
             this.rdr_BFS.Text = "BFS";
             this.rdr_BFS.UseVisualStyleBackColor = true;
             this.rdr_BFS.CheckedChanged += new System.EventHandler(this.rdr_BFS_CheckedChanged);
@@ -198,7 +196,7 @@ namespace Tubes2Stima
             // 
             this.richTextBox1.Location = new System.Drawing.Point(36, 453);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(449, 49);
+            this.richTextBox1.Size = new System.Drawing.Size(449, 208);
             this.richTextBox1.TabIndex = 14;
             this.richTextBox1.Text = "";
             this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
@@ -207,7 +205,7 @@ namespace Tubes2Stima
             // 
             this.richTextBox2.Location = new System.Drawing.Point(322, 301);
             this.richTextBox2.Name = "richTextBox2";
-            this.richTextBox2.Size = new System.Drawing.Size(163, 74);
+            this.richTextBox2.Size = new System.Drawing.Size(163, 64);
             this.richTextBox2.TabIndex = 15;
             this.richTextBox2.Text = "";
             this.richTextBox2.TextChanged += new System.EventHandler(this.richTextBox2_TextChanged);
