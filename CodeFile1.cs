@@ -246,7 +246,7 @@ namespace DepthFirstSearch
             //    Console.WriteLine();
             //}
         }
-        
+        [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();

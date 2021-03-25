@@ -21,3 +21,5 @@ D:\MOSES\Project\Stima\Tubes2_13519022\obj\Debug\Tubes2Stima.csproj.GenerateReso
 D:\MOSES\Project\Stima\Tubes2_13519022\obj\Debug\Tubes2Stima.csproj.CoreCompileInputs.cache
 D:\MOSES\Project\Stima\Tubes2_13519022\obj\Debug\Tubes2Stima.exe
 D:\MOSES\Project\Stima\Tubes2_13519022\obj\Debug\Tubes2Stima.pdb
+C:\Users\joseg\OneDrive\Documents\GitHub\Tubes2_13519022\obj\Debug\Tubes2Stima.Form1.resources
+C:\Users\joseg\OneDrive\Documents\GitHub\Tubes2_13519022\obj\Debug\Tubes2Stima.csproj.GenerateResource.cache
