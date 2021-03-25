@@ -14,7 +14,7 @@ namespace DepthFirstSearch
         private ArrayList inputNodes;
         public DataInput(string path)
         {
-           // string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"../../test.txt");
+            // string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"../../test.txt");
 
             // Read each line of the file into a string array. Each element
             // of the array is one line of the file.
@@ -72,11 +72,11 @@ namespace DepthFirstSearch
         private string CurrentNode;
         private ArrayList LivingNode;
         private string OriginNode;
-        private string DestinationNode ;
+        private string DestinationNode;
         private int[][] AdjMatrix;
         private ArrayList NodeList;
-        private string PathResult="";
-        public DFS(string Origin, string Destination,string path)
+        private string PathResult = "";
+        public DFS(string Origin, string Destination, string path)
         {
             // Get Input Data
             DataInput dataInput = new DataInput(path);
@@ -99,7 +99,7 @@ namespace DepthFirstSearch
             // Initialize Living Nodes
             BranchCountPerNodes.Add(0);
             for (int i = AdjMatrix.Length - 1; i >= 0; i--)
-            {   
+            {
                 if (AdjMatrix[NodeList.IndexOf(CurrentNode)][i] == 1 && (!VisitedNode.Contains(NodeList[i])))
                 {
                     LivingNode.Insert(0, NodeList[i]);
@@ -161,7 +161,7 @@ namespace DepthFirstSearch
 
             }
         }
-        public bool CheckNodeExist(string Origin,string Dest,string path)
+        public bool CheckNodeExist(string Origin, string Dest, string path)
         {
             DataInput dataInput = new DataInput(path);
             ArrayList CheckDataList = dataInput.GetNodes();
@@ -190,7 +190,7 @@ namespace DepthFirstSearch
                 //}
 
                 //Console.WriteLine();
-               //Console.WriteLine("Path To Destination : ");
+                //Console.WriteLine("Path To Destination : ");
                 for (int i = 0; i < BranchCountPerNodes.Count; i++)
                 {
                     if (BranchCountPerNodes[i] > 0)
@@ -303,6 +303,38 @@ namespace BFS
         protected EmptyFileException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }
 
+    /*
+    Cara penggunaan namespace BFS:
+
+    # Create object BFSGraph (ctor memerlukan 1 argumen: path ke file yang akan dijadikan BFS).
+
+    BFS.BFSGraph bfsGraph = new BFS.BFSGraph(path); 
+
+    # Siapkan container penampung hasil fungsi FriendRecommendation ataupun ExploreFriends, dan panggil kedua fungsi tersebut sesuai contoh.
+
+    Dictionary<string, List<string>> FR = bfsGraph.FriendRecommendation(A);
+    List<string> EF = bfsGraph.ExploreFriends(A, H);
+
+    # Ambil hasil fungsi FriendRecommendation dari FR.
+
+    Console.WriteLine("Friend Recommendations for A:");
+    foreach (KeyValuePair<string, List<string>> kv in FR)
+    {
+        Console.WriteLine(kv.Key + " " + kv.Value[0]);
+        Console.Write(kv.Value[1] + " " + kv.Value[2]);
+        for (int i = 3; i < kv.Value.Count; i++)
+        {
+            Console.Write(", " + kv.Value[i]);
+        }
+    }
+
+    # Ambil hasil fungsi ExploreFriends dari EF.
+
+    Console.WriteLine("Nama akun: A dan H");
+    Console.WriteLine(EF[0]);
+    Console.WriteLine(EF[1]);
+
+    */
     class BFSGraph
     {
         private string sourcePath;
@@ -739,8 +771,8 @@ namespace BFS
         // Misalnya A di-recommend berteman dengan F dengan mutual friend B, C, D, dan H dengan mutual friend C, G
         // FriendRecommendation(A)
         // Output:
-        // { "F" : ["(A → B → F, 1st Degree)", "B", "C", "D"],
-        //   "H" : ["(A → C → H, 1st Degree)", "C", "G"]     }
+        // { "F" : ["(A → B → F, 1st Degree)", "3 Mutual Friends:", "B", "C", "D"],
+        //   "H" : ["(A → C → H, 1st Degree)", "2 Mutual Friends:", "C", "G"]     }
         public Dictionary<string, List<string>> FriendRecommendation(string startNode)
         {
             Dictionary<string, List<string>> FR = new Dictionary<string, List<string>>();
@@ -776,7 +808,7 @@ namespace BFS
                 {
                     mutualFriendsMessage = (value.Count - 1).ToString() + " Mutual Friends:";
                 }
-
+                value.Insert(1, mutualFriendsMessage);
                 FR.Add(recommendedFriend, value);
 
             }
