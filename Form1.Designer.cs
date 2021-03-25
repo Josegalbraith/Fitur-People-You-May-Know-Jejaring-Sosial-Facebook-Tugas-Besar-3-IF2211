@@ -125,6 +125,7 @@ namespace Tubes2Stima
             this.rtb_test.Size = new System.Drawing.Size(437, 153);
             this.rtb_test.TabIndex = 6;
             this.rtb_test.Text = "";
+            this.rtb_test.TextChanged += new System.EventHandler(this.rtb_test_TextChanged);
             // 
             // lbl_filename
             // 
@@ -174,6 +175,7 @@ namespace Tubes2Stima
             this.cmb_choose_acc.Name = "cmb_choose_acc";
             this.cmb_choose_acc.Size = new System.Drawing.Size(66, 21);
             this.cmb_choose_acc.TabIndex = 11;
+            this.cmb_choose_acc.SelectedIndexChanged += new System.EventHandler(this.cmb_choose_acc_SelectedIndexChanged);
             // 
             // cmb_explore
             // 
@@ -182,6 +184,7 @@ namespace Tubes2Stima
             this.cmb_explore.Name = "cmb_explore";
             this.cmb_explore.Size = new System.Drawing.Size(66, 21);
             this.cmb_explore.TabIndex = 12;
+            this.cmb_explore.SelectedIndexChanged += new System.EventHandler(this.cmb_explore_SelectedIndexChanged);
             // 
             // lbl_text_friendrec
             // 
@@ -198,6 +201,7 @@ namespace Tubes2Stima
             this.richTextBox1.Size = new System.Drawing.Size(449, 49);
             this.richTextBox1.TabIndex = 14;
             this.richTextBox1.Text = "";
+            this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
             // 
             // richTextBox2
             // 
@@ -206,6 +210,7 @@ namespace Tubes2Stima
             this.richTextBox2.Size = new System.Drawing.Size(163, 74);
             this.richTextBox2.TabIndex = 15;
             this.richTextBox2.Text = "";
+            this.richTextBox2.TextChanged += new System.EventHandler(this.richTextBox2_TextChanged);
             // 
             // Form1
             // 
