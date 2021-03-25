@@ -58,26 +58,27 @@ namespace Tubes2Stima
 
         private void btn_submit_Click(object sender, EventArgs e)
         {
-            lbl_text_friendrec.Text = "Friends Recommendations for " + cmb_choose_acc.Text; 
-            //BFS.BFSGraph bfsGraph = new BFS.BFSGraph(this.inputPath);
-            //Dictionary<string, List<string>> FR = bfsGraph.FriendRecommendation(cmb_choose_acc.Text);
-            //string FriendRecommendTxt = "";
-            //foreach (KeyValuePair<string, List<string>> kv in FR)
-            //{
-            //   // Console.WriteLine(kv.Key + " " + kv.Value[0]);
-            //    FriendRecommendTxt += kv.Key + " " + kv.Value[0] +"\n";
-            //    FriendRecommendTxt += kv.Value[1] + " " + kv.Value[2] ;
+            lbl_text_friendrec.Text = "Friends Recommendations for " + cmb_choose_acc.Text;
+            //BFS.BFSGraph bFSGraph;
+            BFS.BFSGraph bfsGraph = new BFS.BFSGraph(this.inputPath);
+            Dictionary<string, List<string>> FR = bfsGraph.FriendRecommendation(cmb_choose_acc.Text);
+            string FriendRecommendTxt = "";
+            foreach (KeyValuePair<string, List<string>> kv in FR)
+            {
+               // Console.WriteLine(kv.Key + " " + kv.Value[0]);
+                FriendRecommendTxt += kv.Key + " " + kv.Value[0] +"\n";
+                FriendRecommendTxt += kv.Value[1] + " " + kv.Value[2] ;
 
-            //    //Console.Write(kv.Value[1] + " " + kv.Value[2]);
-            //    for (int i = 3; i < kv.Value.Count; i++)
-            //    {
-            //        FriendRecommendTxt += ", " + kv.Value[i];
-            //       // Console.Write(", " + kv.Value[i]);
-            //    }
-            //    FriendRecommendTxt += "\n";
-            //    //Console.WriteLine();
-            //}
-            //richTextBox1.Text = FriendRecommendTxt
+                //Console.Write(kv.Value[1] + " " + kv.Value[2]);
+                for (int i = 3; i < kv.Value.Count; i++)
+                {
+                   FriendRecommendTxt += ", " + kv.Value[i];
+                   // Console.Write(", " + kv.Value[i]);
+                }
+                FriendRecommendTxt += "\n";
+                //Console.WriteLine();
+            }
+            richTextBox1.Text = FriendRecommendTxt;
 
             if (rdr_DFS.Checked == true)
             {
@@ -89,8 +90,8 @@ namespace Tubes2Stima
             }
             else
             {
-                BFS.BFSGraph bfsGraph2 = new BFS.BFSGraph(this.inputPath);
-                List<string> EF = bfsGraph2.ExploreFriends(cmb_choose_acc.Text, cmb_explore.Text);
+                //bFSGraph = new BFS.BFSGraph(this.inputPath);
+                List<string> EF = bfsGraph.ExploreFriends(cmb_choose_acc.Text.ToString(), cmb_explore.Text.ToString());
                 richTextBox2.Text = EF[0] + "\n" + EF[1];
             }
             

@@ -338,7 +338,7 @@ namespace BFS
     class BFSGraph
     {
         private string sourcePath;
-        private int nodeCount;
+        private int verticeCount;
         private Dictionary<string, int> nodeToIndex;
         private Dictionary<int, string> indexToNode;
         private bool[,] adjacencyMatrix;
@@ -382,7 +382,7 @@ namespace BFS
                     // Get # of nodes
                     try
                     {
-                        this.nodeCount = Int32.Parse(f_list[0]);
+                        this.verticeCount = Int32.Parse(f_list[0]);
                     }
                     catch (FormatException e)
                     {
@@ -417,41 +417,32 @@ namespace BFS
                         this.indexToNode.Add(kv.Value, kv.Key);
                     }
 
-                    // Check if nodeCount == nodeToIndex.Count
-                    if (this.nodeCount >= this.nodeToIndex.Count)
+                    // Creates adjacencyMatrix
+                    this.adjacencyMatrix = new bool[this.nodeToIndex.Count, this.nodeToIndex.Count];
+                    for (int i = 0; i < this.nodeToIndex.Count; i++)
                     {
-                        // Creates adjacencyMatrix
-                        this.adjacencyMatrix = new bool[this.nodeCount, this.nodeCount];
-                        for (int i = 0; i < this.nodeCount; i++)
+                        for (int j = 0; i < this.nodeToIndex.Count; i++)
                         {
-                            for (int j = 0; i < this.nodeCount; i++)
-                            {
-                                this.adjacencyMatrix[i, j] = false;
-                            }
+                            this.adjacencyMatrix[i, j] = false;
                         }
-                        
-                        // A vertice should have two edges
-                        try
-                        {
-                            foreach (string[] vertice in vertice_list)
-                            {
-                                this.adjacencyMatrix[nodeToIndex[vertice[0]], nodeToIndex[vertice[1]]] = true;
-                                this.adjacencyMatrix[nodeToIndex[vertice[1]], nodeToIndex[vertice[0]]] = true;
-                            }
-                        }
-                        catch (IndexOutOfRangeException e)
-                        {
-                            throw new IndexOutOfRangeException("At least one vertice has less than two edges", e);
-                        }
-
-                        // Construction complete, path is valid
-                        this.sourcePath = path;
-
                     }
-                    else // Throws an error, should never happen
+                    
+                    // A vertice should have two edges
+                    try
                     {
-                        throw new IndexOutOfRangeException("Number of nodes specified in the file is not enough to contain all vertices");
+                        foreach (string[] vertice in vertice_list)
+                        {
+                            this.adjacencyMatrix[nodeToIndex[vertice[0]], nodeToIndex[vertice[1]]] = true;
+                            this.adjacencyMatrix[nodeToIndex[vertice[1]], nodeToIndex[vertice[0]]] = true;
+                        }
                     }
+                    catch (IndexOutOfRangeException e)
+                    {
+                        throw new IndexOutOfRangeException("At least one vertice has less than two edges", e);
+                    }
+
+                    // Construction complete, path is valid
+                    this.sourcePath = path;
 
                 }
                 else // Throws an error, should never happen
@@ -470,7 +461,7 @@ namespace BFS
         public void Close(string startNode)
         {
             // Does not need to re-close if this.close_flag = true and this.close_startNode = startNode
-            if (!(this.close_flag && (this.close_startNode == startNode)))
+            if (!(this.close_flag && (this.close_startNode.Equals(startNode))))
             {
                 // Set the flags
                 this.close_startNode = startNode;
@@ -495,8 +486,8 @@ namespace BFS
                 int startIndex = this.nodeToIndex[startNode];
 
                 // Initialize boolean array
-                bool[] hasBeenQueued = new bool[this.nodeCount];
-                for (int nodeIndex = 0; nodeIndex < this.nodeCount; nodeIndex++)
+                bool[] hasBeenQueued = new bool[this.nodeToIndex.Count];
+                for (int nodeIndex = 0; nodeIndex < this.nodeToIndex.Count; nodeIndex++)
                 {
                     hasBeenQueued[nodeIndex] = false;
                 }
@@ -517,7 +508,7 @@ namespace BFS
                 while (queue.Count > 0)
                 {
                     i = queue.Dequeue();
-                    for (int j = 0; j < this.nodeCount; j++)
+                    for (int j = 0; j < this.nodeToIndex.Count; j++)
                     {
                         if (this.adjacencyMatrix[i, j] && !hasBeenQueued[j])
                         {
@@ -526,9 +517,13 @@ namespace BFS
                             this.close_closure.Add(this.indexToNode[j]);
                             for (int k = 0; k < this.close_pathToClosedNodes.Count; k++)
                             {
-                                if (this.close_pathToClosedNodes[k][this.close_pathToClosedNodes[k].Count - 1] == this.indexToNode[i])
+                                if (this.close_pathToClosedNodes[k][this.close_pathToClosedNodes[k].Count - 1].Equals(this.indexToNode[i]))
                                 {
-                                    this.close_pathToClosedNodes.Add(this.close_pathToClosedNodes[k]);
+                                    this.close_pathToClosedNodes.Add(new List<string>());
+                                    foreach (string node in this.close_pathToClosedNodes[k])
+                                    {
+                                        this.close_pathToClosedNodes[this.close_pathToClosedNodes.Count - 1].Add(node);
+                                    }
                                     this.close_pathToClosedNodes[this.close_pathToClosedNodes.Count - 1].Add(this.indexToNode[j]);
                                     break;
                                 }
@@ -548,7 +543,7 @@ namespace BFS
         public void Search(string startNode, string endNode)
         {
             // Does not need to re-search if this.search_flag = true, this.closure_startNode = startNode, and this.closure_endNode = endNode
-            if (!(this.search_flag && (this.search_startNode == startNode) && (this.search_endNode == endNode)))
+            if (!(this.search_flag && (this.search_startNode.Equals(startNode)) && (this.search_endNode.Equals(endNode))))
             {
                 // Only needs to iterate through
 
@@ -573,12 +568,16 @@ namespace BFS
                 this.search_flag = true;
 
                 // Only needs to iterate through close_pathToClosedNodes if a closure of startNode has been made
-                if (this.close_flag && (this.close_startNode == startNode))
+                if (this.close_flag && (this.close_startNode.Equals(startNode)))
                 {
                     foreach (List<string> path in this.close_pathToClosedNodes)
                     {
-                        this.search_pathToSearchedNodes.Add(path);
-                        if (path[path.Count - 1] == endNode)
+                        this.search_pathToSearchedNodes.Add(new List<string>());
+                        foreach (string node in path)
+                        {
+                            this.search_pathToSearchedNodes[this.search_pathToSearchedNodes.Count - 1].Add(node);
+                        }
+                        if (path[path.Count - 1].Equals(endNode))
                         {
                             foreach (string node in path)
                             {
@@ -597,8 +596,8 @@ namespace BFS
                     int endIndex = this.nodeToIndex[endNode];
 
                     // Initialize boolean array
-                    bool[] hasBeenQueued = new bool[this.nodeCount];
-                    for (int nodeIndex = 0; nodeIndex < this.nodeCount; nodeIndex++)
+                    bool[] hasBeenQueued = new bool[this.nodeToIndex.Count];
+                    for (int nodeIndex = 0; nodeIndex < this.nodeToIndex.Count; nodeIndex++)
                     {
                         hasBeenQueued[nodeIndex] = false;
                     }
@@ -629,7 +628,7 @@ namespace BFS
                     while ((!isFound) && (queue.Count > 0))
                     {
                         i = queue.Dequeue();
-                        for (int j = 0; j < this.nodeCount; j++)
+                        for (int j = 0; j < this.nodeToIndex.Count; j++)
                         {
                             if (this.adjacencyMatrix[i, j] && !hasBeenQueued[j])
                             {
@@ -637,9 +636,13 @@ namespace BFS
                                 hasBeenQueued[j] = true;
                                 for (int k = 0; k < this.search_pathToSearchedNodes.Count; k++)
                                 {
-                                    if (this.search_pathToSearchedNodes[k][this.search_pathToSearchedNodes[k].Count - 1] == this.indexToNode[i])
+                                    if (this.search_pathToSearchedNodes[k][this.search_pathToSearchedNodes[k].Count - 1].Equals(this.indexToNode[i]))
                                     {
-                                        this.search_pathToSearchedNodes.Add(this.search_pathToSearchedNodes[k]);
+                                        this.search_pathToSearchedNodes.Add(new List<string>());
+                                        foreach (string node in this.search_pathToSearchedNodes[k])
+                                        {
+                                            this.search_pathToSearchedNodes[this.search_pathToSearchedNodes.Count - 1].Add(node);
+                                        }
                                         this.search_pathToSearchedNodes[this.search_pathToSearchedNodes.Count - 1].Add(this.indexToNode[j]);
                                         break;
                                     }
