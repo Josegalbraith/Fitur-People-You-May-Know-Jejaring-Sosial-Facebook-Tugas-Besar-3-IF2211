@@ -67,9 +67,9 @@ namespace Tubes2_13519022
             this.label1 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.labelFriendRecommendation = new System.Windows.Forms.Label();
+            this.richTextBoxFriendRecommendation = new System.Windows.Forms.RichTextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.labelExploreFriends = new System.Windows.Forms.Label();
+            this.richTextBoxExploreFriends = new System.Windows.Forms.RichTextBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -537,7 +537,7 @@ namespace Tubes2_13519022
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.labelFriendRecommendation);
+            this.tabPage1.Controls.Add(this.richTextBoxFriendRecommendation);
             this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -546,19 +546,21 @@ namespace Tubes2_13519022
             this.tabPage1.Text = "Friend Recommendation";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // labelFriendRecommendation
+            // richTextBoxFriendRecommendation
             // 
-            this.labelFriendRecommendation.AutoSize = true;
-            this.labelFriendRecommendation.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelFriendRecommendation.Location = new System.Drawing.Point(3, 3);
-            this.labelFriendRecommendation.Name = "labelFriendRecommendation";
-            this.labelFriendRecommendation.Size = new System.Drawing.Size(19, 15);
-            this.labelFriendRecommendation.TabIndex = 0;
-            this.labelFriendRecommendation.Text = " ";
+            this.richTextBoxFriendRecommendation.BackColor = System.Drawing.SystemColors.Window;
+            this.richTextBoxFriendRecommendation.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.richTextBoxFriendRecommendation.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBoxFriendRecommendation.Location = new System.Drawing.Point(3, 3);
+            this.richTextBoxFriendRecommendation.Name = "richTextBoxFriendRecommendation";
+            this.richTextBoxFriendRecommendation.ReadOnly = true;
+            this.richTextBoxFriendRecommendation.Size = new System.Drawing.Size(452, 148);
+            this.richTextBoxFriendRecommendation.TabIndex = 0;
+            this.richTextBoxFriendRecommendation.Text = "";
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.labelExploreFriends);
+            this.tabPage2.Controls.Add(this.richTextBoxExploreFriends);
             this.tabPage2.Location = new System.Drawing.Point(4, 24);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -567,15 +569,17 @@ namespace Tubes2_13519022
             this.tabPage2.Text = "Explore Friends";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // labelExploreFriends
+            // richTextBoxExploreFriends
             // 
-            this.labelExploreFriends.AutoSize = true;
-            this.labelExploreFriends.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelExploreFriends.Location = new System.Drawing.Point(3, 3);
-            this.labelExploreFriends.Name = "labelExploreFriends";
-            this.labelExploreFriends.Size = new System.Drawing.Size(19, 15);
-            this.labelExploreFriends.TabIndex = 0;
-            this.labelExploreFriends.Text = " ";
+            this.richTextBoxExploreFriends.BackColor = System.Drawing.SystemColors.Window;
+            this.richTextBoxExploreFriends.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.richTextBoxExploreFriends.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBoxExploreFriends.Location = new System.Drawing.Point(3, 3);
+            this.richTextBoxExploreFriends.Name = "richTextBoxExploreFriends";
+            this.richTextBoxExploreFriends.ReadOnly = true;
+            this.richTextBoxExploreFriends.Size = new System.Drawing.Size(452, 148);
+            this.richTextBoxExploreFriends.TabIndex = 0;
+            this.richTextBoxExploreFriends.Text = "";
             // 
             // openFileDialog1
             // 
@@ -621,9 +625,7 @@ namespace Tubes2_13519022
             this.flowLayoutPanel12.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -663,14 +665,14 @@ namespace Tubes2_13519022
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.Label labelFriendRecommendation;
-        private System.Windows.Forms.Label labelExploreFriends;
         private Microsoft.Msagl.GraphViewerGdi.GViewer gViewer1;
         private System.Windows.Forms.Label labelFilename;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button submitButton;
+        private System.Windows.Forms.RichTextBox richTextBoxFriendRecommendation;
+        private System.Windows.Forms.RichTextBox richTextBoxExploreFriends;
     }
 }
 

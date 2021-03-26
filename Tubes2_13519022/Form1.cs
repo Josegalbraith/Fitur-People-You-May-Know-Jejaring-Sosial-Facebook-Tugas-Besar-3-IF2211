@@ -139,26 +139,28 @@ namespace Tubes2_13519022
 
         private void submitButton_Click(object sender, EventArgs e)
         {
-            labelFriendRecommendation.Text = "Friend Recommendations for " + comboBoxChooseAccount.Text;
+            string richTextBoxFriendRecommendation_Text = "Friend Recommendations for " + comboBoxChooseAccount.Text;
             //BFS.BFSGraph bFSGraph;
             BFS.BFSGraph bfsGraph = new BFS.BFSGraph(this.sourcePath);
             Dictionary<string, List<string>> FR = bfsGraph.FriendRecommendation(comboBoxChooseAccount.Text);
-            labelFriendRecommendation.Text += "\n";
+            richTextBoxFriendRecommendation_Text += "\n";
             foreach (KeyValuePair<string, List<string>> kv in FR)
             {
                 // Console.WriteLine(kv.Key + " " + kv.Value[0]);
-                labelFriendRecommendation.Text += kv.Key + " " + kv.Value[0] + "\n";
-                labelFriendRecommendation.Text += kv.Value[1] + " " + kv.Value[2];
+                richTextBoxFriendRecommendation_Text += kv.Key + " " + kv.Value[0] + "\n";
+                richTextBoxFriendRecommendation_Text += kv.Value[1] + " " + kv.Value[2];
 
                 //Console.Write(kv.Value[1] + " " + kv.Value[2]);
                 for (int i = 3; i < kv.Value.Count; i++)
                 {
-                    labelFriendRecommendation.Text += ", " + kv.Value[i];
+                    richTextBoxFriendRecommendation_Text += ", " + kv.Value[i];
                     // Console.Write(", " + kv.Value[i]);
                 }
-                labelFriendRecommendation.Text += "\n";
+                richTextBoxFriendRecommendation_Text += "\n";
                 //Console.WriteLine();
             }
+
+            richTextBoxFriendRecommendation.Text = richTextBoxFriendRecommendation_Text;
 
             List<string> traversedNodes = new List<string>();
             if (radioButtonDFS.Checked)
@@ -166,7 +168,7 @@ namespace Tubes2_13519022
                 DepthFirstSearch.DFS dfs = new DepthFirstSearch.DFS(comboBoxChooseAccount.Text, comboBoxExploreFriendsWith.Text, this.sourcePath);
                 dfs.Search();
                 dfs.ShowResult();
-                labelExploreFriends.Text = dfs.GetPathResult();
+                richTextBoxExploreFriends.Text = dfs.GetPathResult();
 
                 // Creates a list of traversed nodes
                 foreach (string node in dfs.GetPathNode())
@@ -177,7 +179,7 @@ namespace Tubes2_13519022
             else
             {
                 System.Collections.ArrayList EF = bfsGraph.ExploreFriends(comboBoxChooseAccount.Text, comboBoxExploreFriendsWith.Text);
-                labelExploreFriends.Text = EF[0] + "\n" + EF[1];
+                richTextBoxExploreFriends.Text = EF[0] + "\n" + EF[1];
 
                 // Creates a list of traversed nodes
                 foreach (string node in (List<string>)EF[2])
