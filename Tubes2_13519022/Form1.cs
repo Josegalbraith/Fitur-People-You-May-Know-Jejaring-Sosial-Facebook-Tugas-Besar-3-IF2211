@@ -112,6 +112,16 @@ namespace Tubes2_13519022
                         submitButton.Enabled = true;
 
                         // Adds the list of nodes to the comboboxes, and selects the first item
+                        if (comboBoxChooseAccount.Enabled)
+                        {
+                            comboBoxChooseAccount.Items.Clear();
+                        }
+                        if (comboBoxExploreFriendsWith.Enabled)
+                        {
+                            comboBoxExploreFriendsWith.Items.Clear();
+                        }
+                        comboBoxChooseAccount.Enabled = true;
+                        comboBoxExploreFriendsWith.Enabled = true;
                         foreach (string node in this.nodes)
                         {
                             comboBoxChooseAccount.Items.Add(node);
