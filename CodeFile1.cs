@@ -847,22 +847,24 @@ namespace BFS
         // Misalnya ingin diketahui hubungan antara A dengan H, dan mereka terhubung lewat A → B → F → H
         // ExploreFriends("A", "H")
         // Output:
-        // ["2nd-degree connection", "A → B → F → H"]
+        // ["2nd-degree connection", "A → B → F → H", ["A", "B", "F", "H"]]
         // Catatan: Jika tidak ada hubungan, outputnya otomatis:
-        // ["Tidak ada jalur koneksi yang tersedia", "Anda harus memulai koneksi baru itu sendiri."]
-        public List<string> ExploreFriends(string startNode, string endNode)
+        // ["Tidak ada jalur koneksi yang tersedia", "Anda harus memulai koneksi baru itu sendiri.", []]
+        public ArrayList ExploreFriends(string startNode, string endNode)
         {
             this.Search(startNode, endNode);
-            List<string> EF = new List<string>();
+            ArrayList EF = new ArrayList();
             if (this.search_degree < 0)
             {
                 EF.Add("Tidak ada jalur koneksi yang tersedia");
                 EF.Add("Anda harus memulai koneksi baru itu sendiri.");
+                EF.Add(new List<string>());
             }
             else
             {
                 EF.Add(Ordinal(this.search_degree) + "-degree connection");
                 EF.Add(this.GetSearchPathString());
+                EF.Add(this.GetSearchPath());
             }
 
             return EF;
