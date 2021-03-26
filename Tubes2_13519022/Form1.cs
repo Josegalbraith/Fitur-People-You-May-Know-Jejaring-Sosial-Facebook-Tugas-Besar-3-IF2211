@@ -180,7 +180,9 @@ namespace Tubes2_13519022
                 {
                     if (traversedNodes.Contains(vertice[0]) && traversedNodes.Contains(vertice[1]))
                     {
-                        newGraph.AddEdge(vertice[0], vertice[1]).Attr.Color = Microsoft.Msagl.Drawing.Color.Green;
+                        newGraph.AddEdge(vertice[0], vertice[1]).Attr.Color = Microsoft.Msagl.Drawing.Color.Red;
+                        newGraph.FindNode(vertice[0]).Attr.FillColor = Microsoft.Msagl.Drawing.Color.PaleGreen;
+                        newGraph.FindNode(vertice[1]).Attr.FillColor = Microsoft.Msagl.Drawing.Color.PaleGreen;
                     }
                     else
                     {
@@ -208,8 +210,11 @@ namespace Tubes2_13519022
                 {
                     if (traversedNodes.Contains(vertice[0]) && traversedNodes.Contains(vertice[1]))
                     {
-                        newGraph.AddEdge(vertice[0], vertice[1]).Attr.Color = Microsoft.Msagl.Drawing.Color.Green;
-                    } else
+                        newGraph.AddEdge(vertice[0], vertice[1]).Attr.Color = Microsoft.Msagl.Drawing.Color.Red;
+                        newGraph.FindNode(vertice[0]).Attr.FillColor = Microsoft.Msagl.Drawing.Color.PaleGreen;
+                        newGraph.FindNode(vertice[1]).Attr.FillColor = Microsoft.Msagl.Drawing.Color.PaleGreen;
+                    }
+                    else
                     {
                         newGraph.AddEdge(vertice[0], vertice[1]).Attr.ArrowheadAtTarget = Microsoft.Msagl.Drawing.ArrowStyle.None;
                     }
