@@ -134,35 +134,37 @@ namespace Tubes2Stima
                 //Console.WriteLine();
             }
             richTextBox1.Text = FriendRecommendTxt;
-
-            if (rdr_DFS.Checked == true)
+            if (cmb_choose_acc.Text== cmb_explore.Text)
             {
-                DFS dfs = new DFS(cmb_choose_acc.Text, cmb_explore.Text, this.inputPath);
-                dfs.Search();
-                dfs.ShowResult();
-                richTextBox2.Text = dfs.GetPathResult();
-                this.PathNode = dfs.GetPathNode();
-                SuspendLayout();
-                LoadRoute();
-                ResumeLayout();
-
-
+                richTextBox2.Text = cmb_choose_acc.Text;
             }
             else
             {
-                //bFSGraph = new BFS.BFSGraph(this.inputPath);
-                System.Collections.ArrayList EF = bfsGraph.ExploreFriends(cmb_choose_acc.Text.ToString(), cmb_explore.Text.ToString());
-                richTextBox2.Text = EF[0] + "\n" + EF[1];
-                this.PathNode = (List<string>)EF[2];
-                SuspendLayout();
-                LoadRoute();
-                ResumeLayout();
+                if (rdr_DFS.Checked == true)
+                {
+                    DFS dfs = new DFS(cmb_choose_acc.Text, cmb_explore.Text, this.inputPath);
+                    dfs.Search();
+                    dfs.ShowResult();
+                    richTextBox2.Text = dfs.GetPathResult();
+                    this.PathNode = dfs.GetPathNode();
+                    SuspendLayout();
+                    LoadRoute();
+                    ResumeLayout();
+
+
+                }
+                else
+                {
+                    //bFSGraph = new BFS.BFSGraph(this.inputPath);
+                    System.Collections.ArrayList EF = bfsGraph.ExploreFriends(cmb_choose_acc.Text.ToString(), cmb_explore.Text.ToString());
+                    richTextBox2.Text = EF[0] + "\n" + EF[1];
+                    this.PathNode = (List<string>)EF[2];
+                    SuspendLayout();
+                    LoadRoute();
+                    ResumeLayout();
+                }
             }
-
-  
-
-
-
+            
 
         }
 
