@@ -84,11 +84,13 @@ namespace Tubes2Stima
             // rdr_DFS
             // 
             this.rdr_DFS.AutoSize = true;
+            this.rdr_DFS.Checked = true;
             this.rdr_DFS.Location = new System.Drawing.Point(120, 97);
             this.rdr_DFS.Margin = new System.Windows.Forms.Padding(2);
             this.rdr_DFS.Name = "rdr_DFS";
             this.rdr_DFS.Size = new System.Drawing.Size(46, 17);
             this.rdr_DFS.TabIndex = 3;
+            this.rdr_DFS.TabStop = true;
             this.rdr_DFS.Text = "DFS";
             this.rdr_DFS.UseVisualStyleBackColor = true;
             this.rdr_DFS.CheckedChanged += new System.EventHandler(this.rdr_DFS_CheckedChanged);
@@ -185,8 +187,10 @@ namespace Tubes2Stima
             // 
             // richTextBox1
             // 
+            this.richTextBox1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.richTextBox1.Location = new System.Drawing.Point(36, 453);
             this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.ReadOnly = true;
             this.richTextBox1.Size = new System.Drawing.Size(449, 208);
             this.richTextBox1.TabIndex = 14;
             this.richTextBox1.Text = "";
@@ -194,8 +198,10 @@ namespace Tubes2Stima
             // 
             // richTextBox2
             // 
+            this.richTextBox2.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.richTextBox2.Location = new System.Drawing.Point(322, 301);
             this.richTextBox2.Name = "richTextBox2";
+            this.richTextBox2.ReadOnly = true;
             this.richTextBox2.Size = new System.Drawing.Size(163, 64);
             this.richTextBox2.TabIndex = 15;
             this.richTextBox2.Text = "";

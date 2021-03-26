@@ -76,12 +76,15 @@ namespace DepthFirstSearch
         private int[][] AdjMatrix;
         private ArrayList NodeList;
         private string PathResult = "";
+        private List<string> PathNode ;
+
         public DFS(string Origin, string Destination, string path)
         {
             // Get Input Data
             DataInput dataInput = new DataInput(path);
             NodeList = dataInput.GetNodes();
             string[][] inputList = dataInput.GetInputs();
+            PathNode = new List<string>();
 
             // Make The Adjacency Matrix
             AdjMatrix = AdjacencyMatrixMaker(NodeList, inputList);
@@ -191,16 +194,58 @@ namespace DepthFirstSearch
 
                 //Console.WriteLine();
                 //Console.WriteLine("Path To Destination : ");
+                int NDegree = -1;
                 for (int i = 0; i < BranchCountPerNodes.Count; i++)
                 {
                     if (BranchCountPerNodes[i] > 0)
                     {
                         //Console.Write(VisitedNode[i] + "-");
-                        this.PathResult += VisitedNode[i].ToString() + " -> ";
+                        this.PathResult += VisitedNode[i].ToString() + " → ";
+                        this.PathNode.Add(VisitedNode[i].ToString());
+                        NDegree++;
                     }
 
                 }
-                this.PathResult += CurrentNode.ToString();
+                if (NDegree==-1)
+                {
+                    this.PathResult += CurrentNode.ToString();
+                    this.PathNode.Add(CurrentNode.ToString());
+                }
+                else if (NDegree%10 == 0)
+                {
+                    this.PathResult += CurrentNode.ToString();
+                    string DegreeTxt = NDegree.ToString() + "th-degree connection";
+                    this.PathResult = DegreeTxt + "\n" + this.PathResult;
+                    this.PathNode.Add(CurrentNode.ToString());
+                }
+                else if (NDegree % 10 == 1)
+                {
+                    this.PathResult += CurrentNode.ToString();
+                    string DegreeTxt = NDegree.ToString() + "st-degree connection";
+                    this.PathResult = DegreeTxt + "\n" + this.PathResult;
+                    this.PathNode.Add(CurrentNode.ToString());
+                }
+                else if (NDegree % 10 == 2)
+                {
+                    this.PathResult += CurrentNode.ToString();
+                    string DegreeTxt = NDegree.ToString() + "nd-degree connection";
+                    this.PathResult = DegreeTxt + "\n" + this.PathResult;
+                    this.PathNode.Add(CurrentNode.ToString());
+                }
+                else if (NDegree % 10 ==3)
+                {
+                    this.PathResult += CurrentNode.ToString();
+                    string DegreeTxt = NDegree.ToString() + "rd-degree connection";
+                    this.PathResult = DegreeTxt + "\n" + this.PathResult;
+                    this.PathNode.Add(CurrentNode.ToString());
+                }
+                else  
+                {
+                    this.PathResult += CurrentNode.ToString();
+                    string DegreeTxt = NDegree.ToString() + "th-degree connection";
+                    this.PathResult = DegreeTxt + "\n" + this.PathResult;
+                    this.PathNode.Add(CurrentNode.ToString());
+                }
                 //Console.Write(CurrentNode);
                 //Console.WriteLine();
 
@@ -214,6 +259,10 @@ namespace DepthFirstSearch
         public string GetPathResult()
         {
             return this.PathResult;
+        }
+        public List<string> GetPathNode()
+        {
+            return this.PathNode;
         }
         private static int[][] AdjacencyMatrixMaker(ArrayList NodeList, string[][] inputList)
         {
@@ -257,29 +306,12 @@ namespace DepthFirstSearch
         [STAThread]
         static void Main()
         {
-            //Application.EnableVisualStyles();
-            //Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new Form1());
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
 
             //create a form 
             Form1 form = new Form1();
-            //create a viewer object 
-            //Microsoft.Msagl.GraphViewerGdi.GViewer viewer = new Microsoft.Msagl.GraphViewerGdi.GViewer();
-            ////create a graph object 
-            //Microsoft.Msagl.Drawing.Graph graph = new Microsoft.Msagl.Drawing.Graph("graph");
-            ////create the graph content 
-            //graph.AddEdge("A", "B");
-            //graph.AddEdge("B", "C");
-            //graph.AddEdge("A", "C");
 
-
-            ////bind the graph to the viewer 
-            //viewer.Graph = graph;
-            ////associate the viewer with the form 
-            //form.SuspendLayout();
-            //viewer.Dock = System.Windows.Forms.DockStyle.Fill;
-            //form.Controls.Add(viewer);
-            //form.ResumeLayout();
       
             //show the form 
             Application.Run(form);

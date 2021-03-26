@@ -10,17 +10,67 @@ using System.Windows.Forms;
 using System.IO;
 using Tubes2Stima;
 using DepthFirstSearch;
+using Microsoft.Msagl.Drawing;
 
 namespace Tubes2Stima
 {
     public partial class Form1 : Form
     {
         private string inputPath;
+        private string[][] InputData;
+        private List<string> PathNode;
+
         public Form1()
         {
             InitializeComponent();
         }
-       
+       private void LoadData()
+        {
+            Microsoft.Msagl.Drawing.Graph graph = new Microsoft.Msagl.Drawing.Graph("graph");
+            //create the graph content 
+           
+            foreach (string[] line in InputData)
+            {
+                graph.AddEdge(line[0], line[1]).Attr.ArrowheadAtTarget = Microsoft.Msagl.Drawing.ArrowStyle.None;
+            }
+
+            gViewer1.Graph = graph;
+
+
+        }
+        private void LoadRoute()
+        {
+            Microsoft.Msagl.Drawing.Graph graph = new Microsoft.Msagl.Drawing.Graph("graph");
+            //create the graph content 
+
+
+            foreach (string[] line in InputData)
+            {
+                graph.AddEdge(line[0], line[1]).Attr.ArrowheadAtTarget = Microsoft.Msagl.Drawing.ArrowStyle.None;
+            }
+            foreach (Edge edge in graph.Edges)
+            {
+                for (int i = 0; i < this.PathNode.Count() - 1; i++)
+                {
+                    if (edge.Source == PathNode[i] && edge.Target == PathNode[i + 1])
+                    {
+                        edge.Attr.ArrowheadAtTarget = ArrowStyle.Normal;
+                        edge.Attr.Color = Microsoft.Msagl.Drawing.Color.Red;
+                        graph.FindNode(edge.Source).Attr.Color = Microsoft.Msagl.Drawing.Color.Red;
+                        graph.FindNode(edge.Target).Attr.Color = Microsoft.Msagl.Drawing.Color.Red;
+                    }
+                    if (edge.Source == PathNode[i+1] && edge.Target == PathNode[i ] )
+                    {
+                        edge.Attr.ArrowheadAtSource = ArrowStyle.Normal;
+                        edge.Attr.Color = Microsoft.Msagl.Drawing.Color.Red;
+                        graph.FindNode(edge.Source).Attr.Color = Microsoft.Msagl.Drawing.Color.Red;
+                        graph.FindNode(edge.Target).Attr.Color = Microsoft.Msagl.Drawing.Color.Red;
+                    }
+                }
+
+            }
+            gViewer1.Graph = graph;
+        }
         private void btn_browse_Click(object sender, EventArgs e)
         {
             Stream myStream;
@@ -42,16 +92,11 @@ namespace Tubes2Stima
                 
                     lbl_filename.Text = strfilename;
                     this.inputPath = strfilename;
-                    Microsoft.Msagl.Drawing.Graph graph = new Microsoft.Msagl.Drawing.Graph("graph");
-                    //create the graph content 
-                    string[][] InputData = dataInput.GetInputs();
-                    foreach (string[] line in InputData)
-                    {
-                        graph.AddEdge(line[0], line[1]).Attr.ArrowheadAtTarget = Microsoft.Msagl.Drawing.ArrowStyle.None;
-                    }
-
-                    gViewer1.Graph = graph;
-
+                    this.InputData = dataInput.GetInputs();
+                    cmb_choose_acc.SelectedIndex = 0;
+                    cmb_explore.SelectedIndex = 0;
+                    LoadData();
+ 
                 }
             }
         }
@@ -96,6 +141,11 @@ namespace Tubes2Stima
                 dfs.Search();
                 dfs.ShowResult();
                 richTextBox2.Text = dfs.GetPathResult();
+                this.PathNode = dfs.GetPathNode();
+                SuspendLayout();
+                LoadRoute();
+                ResumeLayout();
+
 
             }
             else
@@ -103,12 +153,17 @@ namespace Tubes2Stima
                 //bFSGraph = new BFS.BFSGraph(this.inputPath);
                 System.Collections.ArrayList EF = bfsGraph.ExploreFriends(cmb_choose_acc.Text.ToString(), cmb_explore.Text.ToString());
                 richTextBox2.Text = EF[0] + "\n" + EF[1];
+                this.PathNode = (List<string>)EF[2];
+                SuspendLayout();
+                LoadRoute();
+                ResumeLayout();
             }
-            
-            
+
+  
 
 
-            
+
+
         }
 
         private void richTextBox2_TextChanged(object sender, EventArgs e)
