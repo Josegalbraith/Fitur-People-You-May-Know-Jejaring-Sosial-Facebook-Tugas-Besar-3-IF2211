@@ -96,6 +96,7 @@ namespace DepthFirstSearch
                 }
             }
             
+
         }
         public void Search()
         {
@@ -105,7 +106,6 @@ namespace DepthFirstSearch
                 VisitedNode.Add(CurrentNode);
                 CurrentNode = LivingNode[0].ToString();
                 LivingNode.RemoveAt(0);
-
                 if (BranchCountPerNodes[BranchCountPerNodes.Count - 1] == 0)
                 {
                     for (int j = 2; j < BranchCountPerNodes.Count; j++)
@@ -129,7 +129,7 @@ namespace DepthFirstSearch
                         BranchCountPerNodes[BranchCountPerNodes.Count - 1] += 1;
                     }
                 }
-
+     
             }
         }
         public bool CheckNodeExist(string Origin, string Dest, string path)
@@ -145,7 +145,7 @@ namespace DepthFirstSearch
             {
              
                 int NDegree = -1;
-                for (int i = 0; i < BranchCountPerNodes.Count; i++)
+                for (int i = 0; i < BranchCountPerNodes.Count-1; i++)
                 {
                     if (BranchCountPerNodes[i] > 0)
                     {
