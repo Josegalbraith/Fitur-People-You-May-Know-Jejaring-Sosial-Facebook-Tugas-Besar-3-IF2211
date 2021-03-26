@@ -162,7 +162,7 @@ namespace DepthFirstSearch
             {
 
                 int NDegree = -1;
-                for (int i = 0; i < BranchCountPerNodes.Count; i++)
+                for (int i = 0; i < BranchCountPerNodes.Count-1; i++)
                 {
                     if (BranchCountPerNodes[i] > 0)
                     {
