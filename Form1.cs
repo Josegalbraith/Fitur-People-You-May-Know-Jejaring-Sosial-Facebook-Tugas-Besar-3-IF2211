@@ -101,7 +101,7 @@ namespace Tubes2Stima
             else
             {
                 //bFSGraph = new BFS.BFSGraph(this.inputPath);
-                List<string> EF = bfsGraph.ExploreFriends(cmb_choose_acc.Text.ToString(), cmb_explore.Text.ToString());
+                System.Collections.ArrayList EF = bfsGraph.ExploreFriends(cmb_choose_acc.Text.ToString(), cmb_explore.Text.ToString());
                 richTextBox2.Text = EF[0] + "\n" + EF[1];
             }
             
