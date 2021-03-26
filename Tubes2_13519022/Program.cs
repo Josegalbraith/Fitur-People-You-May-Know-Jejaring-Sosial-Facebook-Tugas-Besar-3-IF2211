@@ -304,11 +304,13 @@ namespace BFS
     Console.WriteLine(EF[0]);
     Console.WriteLine(EF[1]);
 
+    # Visualisasikan ExploreFriends pada graf dengan (List<string>) daftar node yang merupakan jalur, terdapat di EF[2].
+
     */
     class BFSGraph
     {
         private string sourcePath;
-        private int verticeCount;
+        private int edgeCount;
         private Dictionary<string, int> nodeToIndex;
         private Dictionary<int, string> indexToNode;
         private bool[,] adjacencyMatrix;
@@ -352,7 +354,7 @@ namespace BFS
                     // Get # of nodes
                     try
                     {
-                        this.verticeCount = Int32.Parse(f_list[0]);
+                        this.edgeCount = Int32.Parse(f_list[0]);
                     }
                     catch (FormatException e)
                     {
@@ -360,18 +362,18 @@ namespace BFS
                     }
 
                     // Converts f_list into a list of [string, string]
-                    List<string[]> vertice_list = new List<string[]>();
+                    List<string[]> edge_list = new List<string[]>();
                     for (int i = 1; i < f_list.Count; i++)
                     {
-                        vertice_list.Add(f_list[i].Split(' '));
+                        edge_list.Add(f_list[i].Split(' '));
                     }
 
                     // Map each node into a number and vice versa
                     this.nodeToIndex = new Dictionary<string, int>();
                     int index = 0;
-                    foreach (string[] vertice in vertice_list)
+                    foreach (string[] edge in edge_list)
                     {
-                        foreach (string node in vertice)
+                        foreach (string node in edge)
                         {
                             if (!this.nodeToIndex.ContainsKey(node))
                             {
@@ -397,18 +399,18 @@ namespace BFS
                         }
                     }
 
-                    // A vertice should have two edges
+                    // An edge should have two nodes
                     try
                     {
-                        foreach (string[] vertice in vertice_list)
+                        foreach (string[] edge in edge_list)
                         {
-                            this.adjacencyMatrix[nodeToIndex[vertice[0]], nodeToIndex[vertice[1]]] = true;
-                            this.adjacencyMatrix[nodeToIndex[vertice[1]], nodeToIndex[vertice[0]]] = true;
+                            this.adjacencyMatrix[nodeToIndex[edge[0]], nodeToIndex[edge[1]]] = true;
+                            this.adjacencyMatrix[nodeToIndex[edge[1]], nodeToIndex[edge[0]]] = true;
                         }
                     }
                     catch (IndexOutOfRangeException e)
                     {
-                        throw new IndexOutOfRangeException("At least one vertice has less than two edges", e);
+                        throw new IndexOutOfRangeException("At least one edge has less than two nodes", e);
                     }
 
                     // Construction complete, path is valid

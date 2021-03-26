@@ -13,8 +13,8 @@ namespace Tubes2_13519022
     public partial class Tubes2_13519022 : Form
     {
         private string sourcePath;
-        private List<string[]> vertices;
-        private int verticesCount;
+        private List<string[]> edges;
+        private int edgesCount;
         private List<string> nodes;
         private int nodesCount;
 
@@ -53,7 +53,7 @@ namespace Tubes2_13519022
                         // Get # of nodes
                         try
                         {
-                            this.verticesCount = Int32.Parse(f_list[0]);
+                            this.edgesCount = Int32.Parse(f_list[0]);
                         }
                         catch (FormatException formatException)
                         {
@@ -61,18 +61,18 @@ namespace Tubes2_13519022
                         }
 
                         // Converts f_list into a list of [string, string]
-                        this.vertices = new List<string[]>();
+                        this.edges = new List<string[]>();
                         for (int i = 1; i < f_list.Count; i++)
                         {
-                            this.vertices.Add(f_list[i].Split(' '));
+                            this.edges.Add(f_list[i].Split(' '));
                         }
 
                         // Create a set of nodes
                         this.nodes = new List<string>();
                         this.nodesCount = 0;
-                        foreach (string[] vertice in this.vertices)
+                        foreach (string[] edge in this.edges)
                         {
-                            foreach (string node in vertice)
+                            foreach (string node in edge)
                             {
                                 if (!this.nodes.Contains(node))
                                 {
@@ -86,17 +86,17 @@ namespace Tubes2_13519022
                         // Initialize MSAGL
                         Microsoft.Msagl.Drawing.Graph graph = new Microsoft.Msagl.Drawing.Graph("graph");
 
-                        // Create MSAGL graph, each vertice should go both ways
+                        // Create MSAGL graph, each edge should go both ways
                         try
                         {
-                            foreach (string[] vertice in this.vertices)
+                            foreach (string[] edge in this.edges)
                             {
-                                graph.AddEdge(vertice[0], vertice[1]).Attr.ArrowheadAtTarget = Microsoft.Msagl.Drawing.ArrowStyle.None;
+                                graph.AddEdge(edge[0], edge[1]).Attr.ArrowheadAtTarget = Microsoft.Msagl.Drawing.ArrowStyle.None;
                             }
                         }
                         catch (IndexOutOfRangeException indexOutOfRangeException)
                         {
-                            throw new IndexOutOfRangeException("At least one vertice has less than two edges", indexOutOfRangeException);
+                            throw new IndexOutOfRangeException("At least one edge has less than two edges", indexOutOfRangeException);
                         }
 
                         // Construction complete, path is valid
@@ -160,6 +160,7 @@ namespace Tubes2_13519022
                 //Console.WriteLine();
             }
 
+            List<string> traversedNodes = new List<string>();
             if (radioButtonDFS.Checked)
             {
                 DepthFirstSearch.DFS dfs = new DepthFirstSearch.DFS(comboBoxChooseAccount.Text, comboBoxExploreFriendsWith.Text, this.sourcePath);
@@ -168,29 +169,10 @@ namespace Tubes2_13519022
                 labelExploreFriends.Text = dfs.GetPathResult();
 
                 // Creates a list of traversed nodes
-                List<string> traversedNodes = new List<string>();
                 foreach (string node in dfs.GetPathNode())
                 {
                     traversedNodes.Add(node);
                 }
-
-                // Recreates the graph
-                Microsoft.Msagl.Drawing.Graph newGraph = new Microsoft.Msagl.Drawing.Graph();
-                foreach (string[] vertice in this.vertices)
-                {
-                    if (traversedNodes.Contains(vertice[0]) && traversedNodes.Contains(vertice[1]))
-                    {
-                        newGraph.AddEdge(vertice[0], vertice[1]).Attr.Color = Microsoft.Msagl.Drawing.Color.Red;
-                        newGraph.FindNode(vertice[0]).Attr.FillColor = Microsoft.Msagl.Drawing.Color.PaleGreen;
-                        newGraph.FindNode(vertice[1]).Attr.FillColor = Microsoft.Msagl.Drawing.Color.PaleGreen;
-                    }
-                    else
-                    {
-                        newGraph.AddEdge(vertice[0], vertice[1]).Attr.ArrowheadAtTarget = Microsoft.Msagl.Drawing.ArrowStyle.None;
-                    }
-
-                }
-                gViewer1.Graph = newGraph;
             }
             else
             {
@@ -198,30 +180,40 @@ namespace Tubes2_13519022
                 labelExploreFriends.Text = EF[0] + "\n" + EF[1];
 
                 // Creates a list of traversed nodes
-                List<string> traversedNodes = new List<string>();
                 foreach (string node in (List<string>)EF[2])
                 {
                     traversedNodes.Add(node);
                 }
 
-                // Recreates the graph
-                Microsoft.Msagl.Drawing.Graph newGraph = new Microsoft.Msagl.Drawing.Graph();
-                foreach (string[] vertice in this.vertices)
-                {
-                    if (traversedNodes.Contains(vertice[0]) && traversedNodes.Contains(vertice[1]))
-                    {
-                        newGraph.AddEdge(vertice[0], vertice[1]).Attr.Color = Microsoft.Msagl.Drawing.Color.Red;
-                        newGraph.FindNode(vertice[0]).Attr.FillColor = Microsoft.Msagl.Drawing.Color.PaleGreen;
-                        newGraph.FindNode(vertice[1]).Attr.FillColor = Microsoft.Msagl.Drawing.Color.PaleGreen;
-                    }
-                    else
-                    {
-                        newGraph.AddEdge(vertice[0], vertice[1]).Attr.ArrowheadAtTarget = Microsoft.Msagl.Drawing.ArrowStyle.None;
-                    }
-                    
-                }
-                gViewer1.Graph = newGraph;
             }
+
+            // Recreates the graph
+            Microsoft.Msagl.Drawing.Graph newGraph = new Microsoft.Msagl.Drawing.Graph();
+            foreach (string[] edge in this.edges)
+            {
+                newGraph.AddEdge(edge[0], edge[1]).Attr.ArrowheadAtTarget = Microsoft.Msagl.Drawing.ArrowStyle.None;
+            }
+            foreach (Microsoft.Msagl.Drawing.Edge edge in newGraph.Edges)
+            {
+                for (int i = 0; i < (traversedNodes.Count - 1); i++)
+                {
+                    if ((edge.Source == traversedNodes[i]) && (edge.Target == traversedNodes[i + 1]))
+                    {
+                        edge.Attr.ArrowheadAtTarget = Microsoft.Msagl.Drawing.ArrowStyle.Normal;
+                        edge.Attr.Color = Microsoft.Msagl.Drawing.Color.Red;
+                        newGraph.FindNode(edge.Source).Attr.FillColor = Microsoft.Msagl.Drawing.Color.PaleGreen;
+                        newGraph.FindNode(edge.Target).Attr.FillColor = Microsoft.Msagl.Drawing.Color.PaleGreen;
+                    }
+                    if ((edge.Source == traversedNodes[i + 1]) && (edge.Target == traversedNodes[i]))
+                    {
+                        edge.Attr.ArrowheadAtSource = Microsoft.Msagl.Drawing.ArrowStyle.Normal;
+                        edge.Attr.Color = Microsoft.Msagl.Drawing.Color.Red;
+                        newGraph.FindNode(edge.Source).Attr.FillColor = Microsoft.Msagl.Drawing.Color.PaleGreen;
+                        newGraph.FindNode(edge.Target).Attr.FillColor = Microsoft.Msagl.Drawing.Color.PaleGreen;
+                    }
+                }
+            }
+            gViewer1.Graph = newGraph;
         }
     }
 }
