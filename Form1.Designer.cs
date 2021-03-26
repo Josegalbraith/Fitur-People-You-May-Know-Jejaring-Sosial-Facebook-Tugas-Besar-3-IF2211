@@ -29,13 +29,13 @@ namespace Tubes2Stima
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.lbl_title = new System.Windows.Forms.Label();
             this.lbl_graph_file = new System.Windows.Forms.Label();
             this.lbl_algorithm_opsi = new System.Windows.Forms.Label();
             this.rdr_DFS = new System.Windows.Forms.RadioButton();
             this.rdr_BFS = new System.Windows.Forms.RadioButton();
             this.btn_browse = new System.Windows.Forms.Button();
-            this.rtb_test = new System.Windows.Forms.RichTextBox();
             this.lbl_filename = new System.Windows.Forms.Label();
             this.lbl_choose_acc = new System.Windows.Forms.Label();
             this.lbl_explore_with = new System.Windows.Forms.Label();
@@ -45,6 +45,7 @@ namespace Tubes2Stima
             this.lbl_text_friendrec = new System.Windows.Forms.Label();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.richTextBox2 = new System.Windows.Forms.RichTextBox();
+            this.gViewer1 = new Microsoft.Msagl.GraphViewerGdi.GViewer();
             this.SuspendLayout();
             // 
             // lbl_title
@@ -114,16 +115,6 @@ namespace Tubes2Stima
             this.btn_browse.Text = "Browse File";
             this.btn_browse.UseVisualStyleBackColor = true;
             this.btn_browse.Click += new System.EventHandler(this.btn_browse_Click);
-            // 
-            // rtb_test
-            // 
-            this.rtb_test.Location = new System.Drawing.Point(48, 133);
-            this.rtb_test.Margin = new System.Windows.Forms.Padding(2);
-            this.rtb_test.Name = "rtb_test";
-            this.rtb_test.Size = new System.Drawing.Size(437, 153);
-            this.rtb_test.TabIndex = 6;
-            this.rtb_test.Text = "";
-            this.rtb_test.TextChanged += new System.EventHandler(this.rtb_test_TextChanged);
             // 
             // lbl_filename
             // 
@@ -210,11 +201,52 @@ namespace Tubes2Stima
             this.richTextBox2.Text = "";
             this.richTextBox2.TextChanged += new System.EventHandler(this.richTextBox2_TextChanged);
             // 
+            // gViewer1
+            // 
+            this.gViewer1.ArrowheadLength = 10D;
+            this.gViewer1.AsyncLayout = false;
+            this.gViewer1.AutoScroll = true;
+            this.gViewer1.BackwardEnabled = false;
+            this.gViewer1.BuildHitTree = true;
+            this.gViewer1.CurrentLayoutMethod = Microsoft.Msagl.GraphViewerGdi.LayoutMethod.UseSettingsOfTheGraph;
+            this.gViewer1.EdgeInsertButtonVisible = true;
+            this.gViewer1.FileName = "";
+            this.gViewer1.ForwardEnabled = false;
+            this.gViewer1.Graph = null;
+            this.gViewer1.InsertingEdge = false;
+            this.gViewer1.LayoutAlgorithmSettingsButtonVisible = true;
+            this.gViewer1.LayoutEditingEnabled = true;
+            this.gViewer1.Location = new System.Drawing.Point(39, 119);
+            this.gViewer1.LooseOffsetForRouting = 0.25D;
+            this.gViewer1.MouseHitDistance = 0.05D;
+            this.gViewer1.Name = "gViewer1";
+            this.gViewer1.NavigationVisible = true;
+            this.gViewer1.NeedToCalculateLayout = true;
+            this.gViewer1.OffsetForRelaxingInRouting = 0.6D;
+            this.gViewer1.PaddingForEdgeRouting = 8D;
+            this.gViewer1.PanButtonPressed = false;
+            this.gViewer1.SaveAsImageEnabled = true;
+            this.gViewer1.SaveAsMsaglEnabled = true;
+            this.gViewer1.SaveButtonVisible = true;
+            this.gViewer1.SaveGraphButtonVisible = true;
+            this.gViewer1.SaveInVectorFormatEnabled = true;
+            this.gViewer1.Size = new System.Drawing.Size(461, 176);
+            this.gViewer1.TabIndex = 16;
+            this.gViewer1.TightOffsetForRouting = 0.125D;
+            this.gViewer1.ToolBarIsVisible = true;
+            this.gViewer1.Transform = ((Microsoft.Msagl.Core.Geometry.Curves.PlaneTransformation)(resources.GetObject("gViewer1.Transform")));
+            this.gViewer1.UndoRedoButtonsVisible = true;
+            this.gViewer1.WindowZoomButtonPressed = false;
+            this.gViewer1.ZoomF = 1D;
+            this.gViewer1.ZoomWindowThreshold = 0.05D;
+            this.gViewer1.Load += new System.EventHandler(this.gViewer1_Load);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(533, 701);
+            this.Controls.Add(this.gViewer1);
             this.Controls.Add(this.richTextBox2);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.lbl_text_friendrec);
@@ -224,7 +256,6 @@ namespace Tubes2Stima
             this.Controls.Add(this.lbl_explore_with);
             this.Controls.Add(this.lbl_choose_acc);
             this.Controls.Add(this.lbl_filename);
-            this.Controls.Add(this.rtb_test);
             this.Controls.Add(this.btn_browse);
             this.Controls.Add(this.rdr_BFS);
             this.Controls.Add(this.rdr_DFS);
@@ -247,7 +278,6 @@ namespace Tubes2Stima
         private System.Windows.Forms.RadioButton rdr_DFS;
         private System.Windows.Forms.RadioButton rdr_BFS;
         private System.Windows.Forms.Button btn_browse;
-        private System.Windows.Forms.RichTextBox rtb_test;
         private System.Windows.Forms.Label lbl_filename;
         private System.Windows.Forms.Label lbl_choose_acc;
         private System.Windows.Forms.Label lbl_explore_with;
@@ -257,5 +287,6 @@ namespace Tubes2Stima
         private System.Windows.Forms.Label lbl_text_friendrec;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.RichTextBox richTextBox2;
+        private Microsoft.Msagl.GraphViewerGdi.GViewer gViewer1;
     }
 }

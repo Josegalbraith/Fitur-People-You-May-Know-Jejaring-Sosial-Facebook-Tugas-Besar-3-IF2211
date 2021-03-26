@@ -32,3 +32,8 @@ D:\MOSES\Project\Stima\LocalTubesStima2\obj\Debug\Tubes2Stima.csproj.GenerateRes
 D:\MOSES\Project\Stima\LocalTubesStima2\obj\Debug\Tubes2Stima.csproj.CoreCompileInputs.cache
 D:\MOSES\Project\Stima\LocalTubesStima2\obj\Debug\Tubes2Stima.exe
 D:\MOSES\Project\Stima\LocalTubesStima2\obj\Debug\Tubes2Stima.pdb
+D:\MOSES\Project\Stima\Tubes2_13519022\bin\Debug\AutomaticGraphLayout.dll
+D:\MOSES\Project\Stima\Tubes2_13519022\bin\Debug\AutomaticGraphLayout.Drawing.dll
+D:\MOSES\Project\Stima\Tubes2_13519022\bin\Debug\Microsoft.Msagl.GraphViewerGdi.dll
+D:\MOSES\Project\Stima\Tubes2_13519022\bin\Debug\Microsoft.Msagl.WpfGraphControl.dll
+D:\MOSES\Project\Stima\Tubes2_13519022\obj\Debug\Tubes2Stima.csproj.CopyComplete

@@ -39,9 +39,19 @@ namespace Tubes2Stima
                         cmb_choose_acc.Items.Add(line);
                         cmb_explore.Items.Add(line);
                     }
-                    rtb_test.Text = txt ;
+                
                     lbl_filename.Text = strfilename;
                     this.inputPath = strfilename;
+                    Microsoft.Msagl.Drawing.Graph graph = new Microsoft.Msagl.Drawing.Graph("graph");
+                    //create the graph content 
+                    string[][] InputData = dataInput.GetInputs();
+                    foreach (string[] line in InputData)
+                    {
+                        graph.AddEdge(line[0], line[1]).Attr.ArrowheadAtTarget = Microsoft.Msagl.Drawing.ArrowStyle.None;
+                    }
+
+                    gViewer1.Graph = graph;
+
                 }
             }
         }
@@ -122,6 +132,11 @@ namespace Tubes2Stima
         }
 
         private void cmb_explore_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void gViewer1_Load(object sender, EventArgs e)
         {
 
         }
