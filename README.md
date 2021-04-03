@@ -21,15 +21,15 @@ Telah diperoleh jalur dari simpul awal ke semua simpul lainnya secara BFS.\
 
 
 ## Instalasi tertentu
-Sudah menginstall Visual Studio\
+Sudah menginstall Visual Studio
 
 ## Cara menggunakan program
-Dengan menggunakan Visual Stud\
+Dengan menggunakan Visual Stud
 
 ## Author / identitas pembuat
 
 Jose Galbraith Hasintongan (13519022)\
 Feralezer Leonard Gorga Tampubolon (13519062)\
-Moses Ananta (13519076)\
+Moses Ananta (13519076)
 
 
